@@ -14,14 +14,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class EncryptSensitiveInfoTest {
 
-    @Autowired
-    private StringEncryptor stringEncryptor;
+	@Autowired
+	private StringEncryptor stringEncryptor;
 
-    @Test
-    public void getPass() {
-        String text = "";
-        System.out.println(stringEncryptor.encrypt(text));
+	@Test
+	public void getPass() {
+		String text = "";
+		System.out.println(stringEncryptor.encrypt(text));
 
-    }
+	}
 
 }

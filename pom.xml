@@ -23,6 +23,7 @@
         <redisson.verson>3.24.3</redisson.verson>
         <rocket-mq.version>2.2.3</rocket-mq.version>
         <jasypt.version>3.0.5</jasypt.version>
+        <knife4j.version>4.3.0</knife4j.version>
     </properties>
 
     <!-- 子模块 -->
@@ -91,6 +92,13 @@
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${jasypt.version}</version>
             </dependency>
+            <!-- open-api 文档 -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -122,6 +130,21 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <!-- spring 代码格式化 -->
+            <plugin>
+                <groupId>io.spring.javaformat</groupId>
+                <artifactId>spring-javaformat-maven-plugin</artifactId>
+                <version>0.0.39</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <inherited>true</inherited>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
