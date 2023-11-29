@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,6 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * spring security 配置类
@@ -85,7 +85,8 @@ public class SpringSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 禁用 httpBasic 使用 POST 传输数据
                 .httpBasic(AbstractHttpConfigurer::disable)
-// todo .addFilterBefore(tokenVerifyFilter, UsernamePasswordAuthenticationFilter.class)
+                // 将自定义的登陆过滤器 添加到 UsernamePasswordAuthenticationFilter 过滤器前
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 // 登出逻辑
                 .logout(customizer -> {
                     customizer
@@ -118,16 +119,13 @@ public class SpringSecurityConfig {
         httpSecurity.authorizeHttpRequests(register -> {
             // 放行 登陆 登出接口
             register.requestMatchers(
-                    "/api/auth/login",
-                    "/api/auth/logout",
+                    // 放行 Knife4j 接口文档
+                    "/favicon.ico", "/doc.html", "/webjars/**", "/v3/api-docs/**",
+                    // 放行登陆 退出 接口
+                    "/api/auth/login", "/api/auth/logout",
                     "/api/cert"
             ).permitAll();
-            register.anyRequest().access((authentication, object) -> {
-                // todo 完善鉴权逻辑 目前默认任何接口允许访问
-                return new AuthorizationDecision(true);
-            });
         });
         return httpSecurity.build();
-
     }
 }

@@ -69,6 +69,7 @@ public class SystemUser implements UserDetails {
     @Schema(description = "修改时间")
     private Date updateTime;
 
+    @TableField(exist = false)
     private List<? extends GrantedAuthority> authorities;
 
     @Override
