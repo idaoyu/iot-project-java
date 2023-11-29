@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/cert")
 public class CertificateController {
 
-    @GetMapping
-    @Operation(summary = "获取证书")
-    public String getCert() {
-        return null;
-    }
+	@GetMapping
+	@Operation(summary = "获取证书")
+	public String getCert() {
+		return null;
+	}
 
 }
