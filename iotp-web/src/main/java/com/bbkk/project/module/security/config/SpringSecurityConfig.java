@@ -1,6 +1,7 @@
 package com.bbkk.project.module.security.config;
 
 import com.bbkk.project.constant.SecurityErrorCodeConstant;
+import com.bbkk.project.module.security.filter.TokenVerifyFilter;
 import com.bbkk.project.module.security.filter.UsernamePasswordAuthFilter;
 import com.bbkk.project.module.security.handler.LoginAuthenticationFailureHandler;
 import com.bbkk.project.module.security.handler.LoginAuthenticationSuccessHandler;
@@ -36,6 +37,7 @@ public class SpringSecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final LoginAuthenticationSuccessHandler successHandler;
     private final LoginAuthenticationFailureHandler failureHandler;
+    private final TokenVerifyFilter tokenVerifyFilter;
 
     /**
      * 注册 BCryptPasswordEncoder 用于对密码进行加密
@@ -85,6 +87,8 @@ public class SpringSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 禁用 httpBasic 使用 POST 传输数据
                 .httpBasic(AbstractHttpConfigurer::disable)
+                // 将 token 校验过滤器 添加到 UsernamePasswordAuthenticationFilter 过滤器前
+                .addFilterBefore(tokenVerifyFilter, UsernamePasswordAuthenticationFilter.class)
                 // 将自定义的登陆过滤器 添加到 UsernamePasswordAuthenticationFilter 过滤器前
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 // 登出逻辑
