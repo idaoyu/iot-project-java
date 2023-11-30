@@ -4,6 +4,7 @@ import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * 加密敏感信息
@@ -14,14 +15,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class EncryptSensitiveInfoTest {
 
-	@Autowired
-	private StringEncryptor stringEncryptor;
+    @Autowired
+    private StringEncryptor stringEncryptor;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	@Test
-	public void getPass() {
-		String text = "";
-		System.out.println(stringEncryptor.encrypt(text));
+    @Test
+    public void getPass() {
+        String text = "";
+        System.out.println(stringEncryptor.encrypt(text));
+    }
 
-	}
+    @Test
+    public void generatePassword() {
+        String password = "123456";
+        System.out.println(passwordEncoder.encode(password));
+    }
 
 }

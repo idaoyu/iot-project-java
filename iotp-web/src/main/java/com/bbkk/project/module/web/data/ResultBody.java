@@ -48,7 +48,7 @@ public class ResultBody {
 
     public static ResultBody error(String errorCode, String errorMessage) {
         return ResultBody.builder()
-                .success(true)
+                .success(false)
                 .errorCode(errorCode)
                 .errorMessage(errorMessage)
                 .build();
@@ -56,7 +56,7 @@ public class ResultBody {
 
     public static ResultBody error(SecurityErrorCodeConstant constant) {
         return ResultBody.builder()
-                .success(true)
+                .success(false)
                 .errorCode(constant.getCode())
                 .errorMessage(constant.getMessage())
                 .build();
