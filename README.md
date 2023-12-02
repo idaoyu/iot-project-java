@@ -61,11 +61,11 @@ Project
 
 ### 使用到的框架
 
-[Spring Boot](https://spring.io/projects/spring-boot)
-[Spring Security](https://spring.io/projects/spring-security)
-[Mybatis-Plus](https://baomidou.com/)
-[Redisson](https://github.com/redisson/redisson)
-[Quartz](https://www.quartz-scheduler.org/)
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Spring Security](https://spring.io/projects/spring-security)
+- [Mybatis-Plus](https://baomidou.com/)
+- [Redisson](https://github.com/redisson/redisson)
+- [Quartz](https://www.quartz-scheduler.org/)
 
 #### 如何参与开源项目
 
