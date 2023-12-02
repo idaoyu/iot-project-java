@@ -1,6 +1,6 @@
 # iot-project-java
 
-旨在帮助用户管理和分析海量的物联网设备数据。用户可以实时监测设备状态、收集传感器数据，并进行高级分析和可视化。我们提供简单易用的用户界面，让用户能够轻松访问、查询和探索数据。
+旨在帮助用户管理和分析物联网设备数据。用户可以实时监测设备状态、收集传感器数据，并进行高级分析和可视化。我们提供简单易用的用户界面，让用户能够轻松访问、查询和探索数据。
 
 <!-- PROJECT SHIELDS -->
 
@@ -19,6 +19,7 @@
 ## 目录
 
 - [开发前的配置要求](#开发前的配置要求)
+- [安装步骤](#安装步骤)
 - [文件目录说明](#文件目录说明)
 - [部署](#部署)
 - [使用到的框架](#使用到的框架)
@@ -46,12 +47,12 @@ eg:
 
 ```
 Project
-├── db
-├── images
-├── iotp-common
-├── iotp-mq
-├── iotp-web
-├── pom.xml
+├── db               数据库脚本
+├── iotp-common      项目基础模块
+├── iotp-mq          消息队列模块，用于处理消息队列相关的逻辑
+├── iotp-web         web 模块
+└── pom.xml          父依赖文件
+
 ```
 
 ### 部署
@@ -60,7 +61,11 @@ Project
 
 ### 使用到的框架
 
-暂无
+[Spring Boot](https://spring.io/projects/spring-boot)
+[Spring Security](https://spring.io/projects/spring-security)
+[Mybatis-Plus](https://baomidou.com/)
+[Redisson](https://github.com/redisson/redisson)
+[Quartz](https://www.quartz-scheduler.org/)
 
 #### 如何参与开源项目
 
@@ -84,7 +89,7 @@ qchenzexuan@vip.qq.com
 
 ### 版权说明
 
-该项目签署了MIT
+该项目签署了 AGPL-3.0
 授权许可，详情请参阅 [LICENSE.txt](https://github.com/BikiniBottom-KrustyKrab/iot-project-java/blob/main/LICENSE)
 
 ### 鸣谢
