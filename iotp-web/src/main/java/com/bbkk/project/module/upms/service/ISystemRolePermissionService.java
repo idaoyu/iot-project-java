@@ -8,4 +8,13 @@ import com.bbkk.project.module.upms.entity.SystemRolePermission;
  * @since 2023-11-29 18:59
  **/
 public interface ISystemRolePermissionService extends IService<SystemRolePermission> {
+
+    /**
+     * 根据角色id 删除记录
+     *
+     * @param roleId 角色id
+     * @return 成功返回 true
+     */
+    Boolean removeByRoleId(Long roleId);
+
 }

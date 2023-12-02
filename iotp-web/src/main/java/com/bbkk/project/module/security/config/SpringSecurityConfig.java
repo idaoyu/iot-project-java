@@ -122,13 +122,14 @@ public class SpringSecurityConfig {
         // 鉴权逻辑
         httpSecurity.authorizeHttpRequests(register -> {
             // 放行 登陆 登出接口
-            register.requestMatchers(
-                    // 放行 Knife4j 接口文档
-                    "/favicon.ico", "/doc.html", "/webjars/**", "/v3/api-docs/**",
-                    // 放行登陆 退出 接口
-                    "/api/auth/login", "/api/auth/logout",
-                    "/api/cert"
-            ).permitAll();
+//            register.requestMatchers(
+//                    // 放行 Knife4j 接口文档
+//                    "/favicon.ico", "/doc.html", "/webjars/**", "/v3/api-docs/**",
+//                    // 放行登陆 退出 接口
+//                    "/api/auth/login", "/api/auth/logout",
+//                    "/api/cert"
+//            ).permitAll();
+            register.anyRequest().permitAll();
         });
         return httpSecurity.build();
     }

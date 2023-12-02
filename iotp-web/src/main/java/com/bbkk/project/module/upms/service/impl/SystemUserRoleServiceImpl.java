@@ -1,5 +1,7 @@
 package com.bbkk.project.module.upms.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bbkk.project.module.upms.entity.SystemUserRole;
 import com.bbkk.project.module.upms.mapper.SystemUserRoleMapper;
@@ -12,4 +14,15 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper, SystemUserRole> implements ISystemUserRoleService {
+
+    @Override
+    public Boolean removeByRoleId(Long roleId) {
+        LambdaQueryWrapper<SystemUserRole> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(SystemUserRole::getRoleId, roleId);
+        boolean exists = super.exists(wrapper);
+        if (exists) {
+            return super.remove(wrapper);
+        }
+        return true;
+    }
 }
