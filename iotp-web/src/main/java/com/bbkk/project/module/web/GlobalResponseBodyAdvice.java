@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @author 一条秋刀鱼zz qchenzexuan@vip.qq.com
  * @since 2023-10-29 20:28
  **/
-@RestControllerAdvice(basePackages = "com.hope.project")
+@RestControllerAdvice(basePackages = "com.bbkk.project")
 public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
