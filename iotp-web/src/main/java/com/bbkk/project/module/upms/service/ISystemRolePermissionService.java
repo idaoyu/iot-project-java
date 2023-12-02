@@ -17,4 +17,12 @@ public interface ISystemRolePermissionService extends IService<SystemRolePermiss
      */
     Boolean removeByRoleId(Long roleId);
 
+    /**
+     * 根据权限id删除记录
+     *
+     * @param permissionId 权限id
+     * @return 成功返回 true
+     */
+    Boolean removeByPermissionId(Long permissionId);
+
 }

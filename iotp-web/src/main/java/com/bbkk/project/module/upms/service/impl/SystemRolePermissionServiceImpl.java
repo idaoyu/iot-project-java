@@ -29,4 +29,18 @@ public class SystemRolePermissionServiceImpl extends ServiceImpl<SystemRolePermi
         // 否则直接返回删除成功 因为没有
         return true;
     }
+
+    @Override
+    public Boolean removeByPermissionId(Long permissionId) {
+        LambdaQueryWrapper<SystemRolePermission> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(SystemRolePermission::getPermissionId, permissionId);
+        // 先查有没有绑定的记录
+        boolean exists = super.exists(wrapper);
+        if (exists) {
+            // 如果存在记录 则删除
+            return super.remove(wrapper);
+        }
+        // 否则直接返回删除成功 因为没有
+        return true;
+    }
 }

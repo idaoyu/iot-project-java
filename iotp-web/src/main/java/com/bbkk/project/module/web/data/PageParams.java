@@ -12,9 +12,15 @@ import lombok.Data;
 @Data
 public class PageParams {
 
+    /**
+     * 分页参数：当前页码
+     */
     @NotNull(message = "分页参数 current 不能为空")
     private Integer current;
 
+    /**
+     * 分页参数：一页大小
+     */
     @NotNull(message = "分页参数 pageSize 不能为空")
     private Integer pageSize;
 
