@@ -22,7 +22,6 @@
         <redisson.verson>3.24.3</redisson.verson>
         <rocket-mq.version>2.2.3</rocket-mq.version>
         <jasypt.version>3.0.5</jasypt.version>
-        <knife4j.version>4.3.0</knife4j.version>
         <fastjson.version>2.0.32</fastjson.version>
         <jjwt.version>0.12.3</jjwt.version>
     </properties>
@@ -97,12 +96,6 @@
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${jasypt.version}</version>
-            </dependency>
-            <!-- open-api 文档 -->
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
             </dependency>
             <!-- jwt 相关依赖 -->
             <dependency>
