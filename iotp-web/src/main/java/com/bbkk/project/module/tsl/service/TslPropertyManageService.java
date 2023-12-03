@@ -1,4 +1,4 @@
-package com.bbkk.project.module.tsl.business;
+package com.bbkk.project.module.tsl.service;
 
 import com.bbkk.project.exception.BizException;
 import com.bbkk.project.module.tsl.constant.PropertyDataTypeConstant;
@@ -7,8 +7,6 @@ import com.bbkk.project.module.tsl.data.CreateTslPropertyParams;
 import com.bbkk.project.module.tsl.data.TslEnumValueParams;
 import com.bbkk.project.module.tsl.entity.TslEnumValue;
 import com.bbkk.project.module.tsl.entity.TslProperty;
-import com.bbkk.project.module.tsl.service.ITslEnumValueService;
-import com.bbkk.project.module.tsl.service.ITslPropertyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

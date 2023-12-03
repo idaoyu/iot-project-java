@@ -1,8 +1,8 @@
 package com.bbkk.project.module.tsl.controller;
 
-import com.bbkk.project.module.tsl.business.TslPropertyManageService;
 import com.bbkk.project.module.tsl.constant.PropertyDataTypeConstant;
 import com.bbkk.project.module.tsl.data.CreateTslPropertyParams;
+import com.bbkk.project.module.tsl.service.TslPropertyManageService;
 import com.bbkk.project.utils.ValidatedGroup;
 import com.bbkk.project.utils.ValidatedUtil;
 import lombok.RequiredArgsConstructor;
