@@ -17,4 +17,11 @@ public interface ISystemUserRoleService extends IService<SystemUserRole> {
      */
     Boolean removeByRoleId(Long roleId);
 
+    /**
+     * 根据 userId 删除记录
+     *
+     * @param id 用户id
+     * @return 返回 true 成功
+     */
+    Boolean removeByUserId(Long id);
 }

@@ -1,6 +1,8 @@
 package com.bbkk.project.module.upms.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bbkk.project.module.upms.data.PageGetUserParams;
 import com.bbkk.project.module.upms.entity.SystemUser;
 
 /**
@@ -17,4 +19,11 @@ public interface ISystemUserService extends IService<SystemUser> {
      */
     SystemUser findUserByUsername(String username);
 
+    /**
+     * 根据参数分页查询用户
+     *
+     * @param params PageGetUserParams
+     * @return IPage<SystemUser>
+     */
+    IPage<SystemUser> pageGetUser(PageGetUserParams params);
 }

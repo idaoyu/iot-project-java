@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,14 +41,27 @@ public class SystemUser implements UserDetails {
     /**
      * 密码
      */
+    @JsonIgnore
     @TableField(value = "`password`")
     private String password;
+
+    /**
+     * 昵称
+     */
+    @TableField(value = "nickname")
+    private String nickname;
 
     /**
      * 是否启用
      */
     @TableField(value = "`enable`")
     private Boolean enable;
+
+    /**
+     * 头像
+     */
+    @TableField(value = "profile_photo")
+    private String profilePhoto;
 
     /**
      * 创建时间
@@ -65,16 +79,19 @@ public class SystemUser implements UserDetails {
     private List<? extends GrantedAuthority> authorities;
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }

@@ -25,4 +25,15 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
         }
         return true;
     }
+
+    @Override
+    public Boolean removeByUserId(Long id) {
+        LambdaQueryWrapper<SystemUserRole> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(SystemUserRole::getUserId, id);
+        boolean exists = super.exists(wrapper);
+        if (exists) {
+            return super.remove(wrapper);
+        }
+        return true;
+    }
 }
