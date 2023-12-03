@@ -57,7 +57,7 @@ public class CreateTslPropertyParams {
      * 步长
      */
     @NotNull(message = "步长不能为空", groups = {ValidatedGroup.TslOtherDataTypeGroup.class})
-    private Long stepSize;
+    private String stepSize;
 
     /**
      * 单位
