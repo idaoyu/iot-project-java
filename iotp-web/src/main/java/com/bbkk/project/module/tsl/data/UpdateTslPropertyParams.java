@@ -9,19 +9,13 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * 创建物模型 属性 接口入参
+ * 修改物模型属性入参
  *
  * @author 一条秋刀鱼zz qchenzexuan@vip.qq.com
- * @since 2023-12-03 14:01
+ * @since 2023-12-04 20:42
  **/
 @Data
-public class CreateTslPropertyParams {
-
-    /**
-     * 唯一标识
-     */
-    @NotEmpty(message = "唯一标识不能为空")
-    private String id;
+public class UpdateTslPropertyParams {
 
     /**
      * 名称
@@ -76,6 +70,6 @@ public class CreateTslPropertyParams {
      */
     @Valid
     @NotEmpty(message = "数据类型为枚举时，枚举值不能为空", groups = {ValidatedGroup.TslEnumDataTypeGroup.class})
-    private List<CreateTslEnumValueParams> enumValueParamsList;
+    private List<UpdateTslEnumValueParams> enumValueParamsList;
 
 }

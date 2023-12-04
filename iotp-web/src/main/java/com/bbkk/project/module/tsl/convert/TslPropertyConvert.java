@@ -32,7 +32,6 @@ public interface TslPropertyConvert {
     @Mapping(target = "updateTime", expression = "java(new java.util.Date())")
     TslProperty createTslPropertyParams2TslProperty(CreateTslPropertyParams params);
 
-
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "description", source = "description")

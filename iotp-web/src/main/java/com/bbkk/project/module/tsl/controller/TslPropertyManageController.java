@@ -5,6 +5,7 @@ import com.bbkk.project.module.tsl.constant.PropertyDataTypeConstant;
 import com.bbkk.project.module.tsl.data.CreateTslPropertyParams;
 import com.bbkk.project.module.tsl.data.PageGetTslPropertyParams;
 import com.bbkk.project.module.tsl.data.TslPropertyVO;
+import com.bbkk.project.module.tsl.data.UpdateTslPropertyParams;
 import com.bbkk.project.module.tsl.service.TslPropertyManageService;
 import com.bbkk.project.utils.ValidatedGroup;
 import com.bbkk.project.utils.ValidatedUtil;
@@ -45,6 +46,19 @@ public class TslPropertyManageController {
     @GetMapping
     public IPage<TslPropertyVO> pageGetTslProperty(@Validated PageGetTslPropertyParams params) {
         return tslPropertyManageService.pageGetTslProperty(params);
+    }
+
+    @PutMapping
+    public String updateTslProperty(
+            @RequestBody @Validated UpdateTslPropertyParams params,
+            @NotEmpty(message = "属性id不能为空") String id
+    ) {
+        if (PropertyDataTypeConstant.ENUM.getDataType().equals(params.getDataType())) {
+            ValidatedUtil.validateEntity(params, ValidatedGroup.TslEnumDataTypeGroup.class);
+        } else {
+            ValidatedUtil.validateEntity(params, ValidatedGroup.TslOtherDataTypeGroup.class);
+        }
+        return tslPropertyManageService.updateTslProperty(params, id);
     }
 
 }

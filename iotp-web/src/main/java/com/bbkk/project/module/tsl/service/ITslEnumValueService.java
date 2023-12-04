@@ -27,4 +27,12 @@ public interface ITslEnumValueService extends IService<TslEnumValue> {
      */
     List<TslEnumValue> listByMasterId(String masterId);
 
+    /**
+     * 根据 id 更新描述
+     *
+     * @param description 新的描述信息
+     * @param id          id
+     * @return 成功返回 true
+     */
+    Boolean updateDescriptionById(String description, Long id);
 }
