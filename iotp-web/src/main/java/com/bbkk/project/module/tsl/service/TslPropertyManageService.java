@@ -43,10 +43,10 @@ public class TslPropertyManageService {
             throw new BizException("创建物模型属性失败，请稍后重试");
         }
         if (tslProperty.getDataType().equals(ENUM.getDataType())) {
-            for (CreateTslEnumValueParams createTslEnumValueParams : params.getEnumValueParamsList()) {
+            for (OperateTslEnumValueParams operateTslEnumValueParams : params.getEnumValueParamsList()) {
                 TslEnumValue.TslEnumValueBuilder builder = TslEnumValue.builder();
-                builder.value(createTslEnumValueParams.getValue());
-                builder.description(createTslEnumValueParams.getDescription());
+                builder.value(operateTslEnumValueParams.getValue());
+                builder.description(operateTslEnumValueParams.getDescription());
                 builder.masterId(tslProperty.getId());
                 boolean saveEnumValue = tslEnumValueService.save(builder.build());
                 if (!saveEnumValue) {
@@ -114,7 +114,7 @@ public class TslPropertyManageService {
      * @param newDataType         新的物模型数据类型
      * @param enumValueParamsList 新的物模型枚举
      */
-    private void handlerTslEnumValue(TslProperty tslProperty, String newDataType, List<UpdateTslEnumValueParams> enumValueParamsList) {
+    private void handlerTslEnumValue(TslProperty tslProperty, String newDataType, List<OperateTslEnumValueParams> enumValueParamsList) {
         if (ENUM.getDataType().equals(tslProperty.getDataType()) && !newDataType.equals(ENUM.getDataType())) {
             // 如果修改之前是枚举 修改后不是枚举
             Boolean success = tslEnumValueService.removeByMasterId(tslProperty.getId());
@@ -124,7 +124,7 @@ public class TslPropertyManageService {
             return;
         } else if (!ENUM.getDataType().equals(tslProperty.getDataType()) && newDataType.equals(ENUM.getDataType())) {
             // 如果修改之前不是枚举 修改后是枚举
-            for (UpdateTslEnumValueParams enumValueParams : enumValueParamsList) {
+            for (OperateTslEnumValueParams enumValueParams : enumValueParamsList) {
                 TslEnumValue.TslEnumValueBuilder builder = TslEnumValue.builder();
                 builder.masterId(tslProperty.getId());
                 builder.value(enumValueParams.getValue());
@@ -143,7 +143,7 @@ public class TslPropertyManageService {
         List<TslEnumValue> list = tslEnumValueService.listByMasterId(tslProperty.getId());
         Map<String, TslEnumValue> map = list.stream().collect(Collectors.toMap(TslEnumValue::getValue, v -> v));
         List<String> newValueList = Lists.newArrayList();
-        for (UpdateTslEnumValueParams enumValueParams : enumValueParamsList) {
+        for (OperateTslEnumValueParams enumValueParams : enumValueParamsList) {
             TslEnumValue tslEnumValue = map.get(enumValueParams.getValue());
             if (tslEnumValue == null) {
                 // 原数据中不包含新数据 则新增

@@ -61,6 +61,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ValidationException.class)
     public ResultBody validationExceptionHandler(ValidationException ex) {
         if (ex instanceof ConstraintViolationException realException) {
+            if (realException.getConstraintViolations() == null) {
+                return ResultBody.error(REQUEST_PARAMS_EXCEPTION.getErrorCode(), realException.getMessage());
+            }
             Set<ConstraintViolation<?>> constraintViolations = realException.getConstraintViolations();
             if (constraintViolations.iterator().hasNext()) {
                 ConstraintViolation<?> violation = constraintViolations.iterator().next();

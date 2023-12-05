@@ -5,13 +5,13 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 /**
- * 修改物模型属性枚举类型数据入参
+ * 物模型枚举类型入参
  *
  * @author 一条秋刀鱼zz qchenzexuan@vip.qq.com
- * @since 2023-12-04 20:43
+ * @since 2023-12-03 14:02
  **/
 @Data
-public class UpdateTslEnumValueParams {
+public class OperateTslEnumValueParams {
 
     @NotEmpty(message = "枚举值不能为空", groups = {ValidatedGroup.TslEnumDataTypeGroup.class})
     private String value;

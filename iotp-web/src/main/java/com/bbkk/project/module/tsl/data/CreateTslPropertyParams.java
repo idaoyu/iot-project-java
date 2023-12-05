@@ -76,6 +76,6 @@ public class CreateTslPropertyParams {
      */
     @Valid
     @NotEmpty(message = "数据类型为枚举时，枚举值不能为空", groups = {ValidatedGroup.TslEnumDataTypeGroup.class})
-    private List<CreateTslEnumValueParams> enumValueParamsList;
+    private List<OperateTslEnumValueParams> enumValueParamsList;
 
 }
