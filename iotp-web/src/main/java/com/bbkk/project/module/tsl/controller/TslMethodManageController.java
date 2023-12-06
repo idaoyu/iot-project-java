@@ -6,12 +6,10 @@ import com.bbkk.project.module.tsl.data.OperateTslMethodParamsDTO;
 import com.bbkk.project.module.tsl.service.TslMethodManageService;
 import com.bbkk.project.utils.ValidatedGroup;
 import com.bbkk.project.utils.ValidatedUtil;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 物模型方法管理接口
@@ -44,6 +42,11 @@ public class TslMethodManageController {
             }
         }
         return tslMethodManageService.createTslMethod(params);
+    }
+
+    @DeleteMapping
+    public String removeTslMethod(@NotEmpty(message = "要删除的id不能为空") String id) {
+        return tslMethodManageService.removeTslMethod(id);
     }
 
 }
