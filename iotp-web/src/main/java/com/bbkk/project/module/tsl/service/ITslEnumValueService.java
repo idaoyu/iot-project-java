@@ -15,9 +15,10 @@ public interface ITslEnumValueService extends IService<TslEnumValue> {
      * 根据关联的id删除枚举值
      *
      * @param masterId 关联物模型中 属性/方法/事件 的id
+     * @param source   来源
      * @return 成功返回 true
      */
-    Boolean removeByMasterId(String masterId);
+    Boolean removeByMasterIdAndSource(String masterId, String source);
 
     /**
      * 根据关联的id查询枚举值
@@ -25,7 +26,7 @@ public interface ITslEnumValueService extends IService<TslEnumValue> {
      * @param masterId 关联物模型中 属性/方法/事件 的id
      * @return List<TslEnumValue>
      */
-    List<TslEnumValue> listByMasterId(String masterId);
+    List<TslEnumValue> listByMasterId(String masterId, String source);
 
     /**
      * 根据 id 更新描述

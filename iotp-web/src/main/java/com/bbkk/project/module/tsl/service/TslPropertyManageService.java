@@ -2,6 +2,7 @@ package com.bbkk.project.module.tsl.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bbkk.project.exception.BizException;
+import com.bbkk.project.module.tsl.constant.EnumValueSource;
 import com.bbkk.project.module.tsl.convert.TslPropertyConvert;
 import com.bbkk.project.module.tsl.data.*;
 import com.bbkk.project.module.tsl.entity.TslEnumValue;
@@ -48,6 +49,7 @@ public class TslPropertyManageService {
                 builder.value(operateTslEnumValueParams.getValue());
                 builder.description(operateTslEnumValueParams.getDescription());
                 builder.masterId(tslProperty.getId());
+                builder.source(EnumValueSource.PROPERTY.getSource());
                 boolean saveEnumValue = tslEnumValueService.save(builder.build());
                 if (!saveEnumValue) {
                     throw new BizException("创建物模型属性失败，请稍后重试");
@@ -62,7 +64,7 @@ public class TslPropertyManageService {
     public String removeTslProperty(String id) {
         TslProperty tslProperty = tslPropertyService.getOptById(id).orElseThrow(() -> new BizException("要删除的物模型属性不存在"));
         if (tslProperty.getDataType().equals(ENUM.getDataType())) {
-            Boolean rmEnumValue = tslEnumValueService.removeByMasterId(id);
+            Boolean rmEnumValue = tslEnumValueService.removeByMasterIdAndSource(id, EnumValueSource.PROPERTY.getSource());
             if (!rmEnumValue) {
                 throw new BizException("删除物模型属性失败，请稍后重试");
             }
@@ -81,7 +83,7 @@ public class TslPropertyManageService {
         for (TslPropertyVO record : voPage.getRecords()) {
             if (record.getDataType().equals(ENUM.getDataType())) {
                 // 数据类型为枚举
-                List<TslEnumValue> enumValueList = tslEnumValueService.listByMasterId(record.getId());
+                List<TslEnumValue> enumValueList = tslEnumValueService.listByMasterId(record.getId(), EnumValueSource.PROPERTY.getSource());
                 record.setEnumValueList(enumValueList);
             }
         }
@@ -117,7 +119,7 @@ public class TslPropertyManageService {
     private void handlerTslEnumValue(TslProperty tslProperty, String newDataType, List<OperateTslEnumValueParams> enumValueParamsList) {
         if (ENUM.getDataType().equals(tslProperty.getDataType()) && !newDataType.equals(ENUM.getDataType())) {
             // 如果修改之前是枚举 修改后不是枚举
-            Boolean success = tslEnumValueService.removeByMasterId(tslProperty.getId());
+            Boolean success = tslEnumValueService.removeByMasterIdAndSource(tslProperty.getId(), EnumValueSource.PROPERTY.getSource());
             if (!success) {
                 throw new BizException("修改物模型属性失败，请稍后重试");
             }
@@ -127,6 +129,7 @@ public class TslPropertyManageService {
             for (OperateTslEnumValueParams enumValueParams : enumValueParamsList) {
                 TslEnumValue.TslEnumValueBuilder builder = TslEnumValue.builder();
                 builder.masterId(tslProperty.getId());
+                builder.source(EnumValueSource.PROPERTY.getSource());
                 builder.value(enumValueParams.getValue());
                 builder.description(enumValueParams.getDescription());
                 boolean success = tslEnumValueService.save(builder.build());
@@ -140,7 +143,7 @@ public class TslPropertyManageService {
             return;
         }
         // 类型没有修改 但是内容可能被修改
-        List<TslEnumValue> list = tslEnumValueService.listByMasterId(tslProperty.getId());
+        List<TslEnumValue> list = tslEnumValueService.listByMasterId(tslProperty.getId(), EnumValueSource.PROPERTY.getSource());
         Map<String, TslEnumValue> map = list.stream().collect(Collectors.toMap(TslEnumValue::getValue, v -> v));
         List<String> newValueList = Lists.newArrayList();
         for (OperateTslEnumValueParams enumValueParams : enumValueParamsList) {
@@ -149,6 +152,7 @@ public class TslPropertyManageService {
                 // 原数据中不包含新数据 则新增
                 TslEnumValue.TslEnumValueBuilder builder = TslEnumValue.builder();
                 builder.masterId(tslProperty.getId());
+                builder.source(EnumValueSource.PROPERTY.getSource());
                 builder.value(enumValueParams.getValue());
                 builder.description(enumValueParams.getDescription());
                 boolean success = tslEnumValueService.save(builder.build());

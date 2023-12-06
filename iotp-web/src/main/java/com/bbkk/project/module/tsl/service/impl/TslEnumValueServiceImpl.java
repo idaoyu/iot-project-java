@@ -19,9 +19,10 @@ import java.util.List;
 public class TslEnumValueServiceImpl extends ServiceImpl<TslEnumValueMapper, TslEnumValue> implements ITslEnumValueService {
 
     @Override
-    public Boolean removeByMasterId(String masterId) {
+    public Boolean removeByMasterIdAndSource(String masterId, String source) {
         LambdaQueryWrapper<TslEnumValue> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(TslEnumValue::getMasterId, masterId);
+        wrapper.eq(TslEnumValue::getSource, source);
         boolean exists = super.exists(wrapper);
         if (!exists) {
             return true;
@@ -30,9 +31,10 @@ public class TslEnumValueServiceImpl extends ServiceImpl<TslEnumValueMapper, Tsl
     }
 
     @Override
-    public List<TslEnumValue> listByMasterId(String masterId) {
+    public List<TslEnumValue> listByMasterId(String masterId, String source) {
         LambdaQueryWrapper<TslEnumValue> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(TslEnumValue::getMasterId, masterId);
+        wrapper.eq(TslEnumValue::getSource, source);
         return super.list(wrapper);
     }
 

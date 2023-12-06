@@ -32,6 +32,12 @@ public class TslEnumValue {
     private String masterId;
 
     /**
+     * 该条记录的来源
+     */
+    @TableField(value = "source")
+    private String source;
+
+    /**
      * 值
      */
     @TableField(value = "value")
