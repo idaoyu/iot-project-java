@@ -1,6 +1,6 @@
 package com.bbkk.project.module.tsl.controller;
 
-import com.bbkk.project.module.tsl.constant.PropertyDataTypeConstant;
+import com.bbkk.project.module.tsl.constant.DataTypeConstant;
 import com.bbkk.project.module.tsl.data.CreateTslMethodParams;
 import com.bbkk.project.module.tsl.data.OperateTslMethodParamsDTO;
 import com.bbkk.project.module.tsl.service.TslMethodManageService;
@@ -30,14 +30,14 @@ public class TslMethodManageController {
     @PostMapping
     public String createTslMethod(@RequestBody @Validated CreateTslMethodParams params) {
         for (OperateTslMethodParamsDTO inputParam : params.getInputParams()) {
-            if (inputParam.getDataType().equals(PropertyDataTypeConstant.ENUM.getDataType())) {
+            if (inputParam.getDataType().equals(DataTypeConstant.ENUM.getDataType())) {
                 ValidatedUtil.validateEntity(inputParam, ValidatedGroup.TslEnumDataTypeGroup.class);
             } else {
                 ValidatedUtil.validateEntity(inputParam, ValidatedGroup.TslOtherDataTypeGroup.class);
             }
         }
         for (OperateTslMethodParamsDTO outputParams : params.getOutputParams()) {
-            if (outputParams.getDataType().equals(PropertyDataTypeConstant.ENUM.getDataType())) {
+            if (outputParams.getDataType().equals(DataTypeConstant.ENUM.getDataType())) {
                 ValidatedUtil.validateEntity(outputParams, ValidatedGroup.TslEnumDataTypeGroup.class);
             } else {
                 ValidatedUtil.validateEntity(outputParams, ValidatedGroup.TslOtherDataTypeGroup.class);

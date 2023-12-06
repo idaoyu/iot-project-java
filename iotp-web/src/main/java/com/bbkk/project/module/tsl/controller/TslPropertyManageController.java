@@ -1,7 +1,7 @@
 package com.bbkk.project.module.tsl.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bbkk.project.module.tsl.constant.PropertyDataTypeConstant;
+import com.bbkk.project.module.tsl.constant.DataTypeConstant;
 import com.bbkk.project.module.tsl.data.CreateTslPropertyParams;
 import com.bbkk.project.module.tsl.data.PageGetTslPropertyParams;
 import com.bbkk.project.module.tsl.data.TslPropertyVO;
@@ -30,7 +30,7 @@ public class TslPropertyManageController {
 
     @PostMapping
     public String createTslProperty(@RequestBody @Validated CreateTslPropertyParams params) {
-        if (PropertyDataTypeConstant.ENUM.getDataType().equals(params.getDataType())) {
+        if (DataTypeConstant.ENUM.getDataType().equals(params.getDataType())) {
             ValidatedUtil.validateEntity(params, ValidatedGroup.TslEnumDataTypeGroup.class);
         } else {
             ValidatedUtil.validateEntity(params, ValidatedGroup.TslOtherDataTypeGroup.class);
@@ -53,7 +53,7 @@ public class TslPropertyManageController {
             @RequestBody @Validated UpdateTslPropertyParams params,
             @NotEmpty(message = "属性id不能为空") String id
     ) {
-        if (PropertyDataTypeConstant.ENUM.getDataType().equals(params.getDataType())) {
+        if (DataTypeConstant.ENUM.getDataType().equals(params.getDataType())) {
             ValidatedUtil.validateEntity(params, ValidatedGroup.TslEnumDataTypeGroup.class);
         } else {
             ValidatedUtil.validateEntity(params, ValidatedGroup.TslOtherDataTypeGroup.class);

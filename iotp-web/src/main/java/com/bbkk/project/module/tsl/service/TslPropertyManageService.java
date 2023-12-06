@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.bbkk.project.module.tsl.constant.PropertyDataTypeConstant.ENUM;
+import static com.bbkk.project.module.tsl.constant.DataTypeConstant.ENUM;
 
 /**
  * 物模型属性管理接口 业务逻辑

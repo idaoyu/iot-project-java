@@ -11,7 +11,7 @@ import lombok.Getter;
  **/
 @Getter
 @AllArgsConstructor
-public enum PropertyDataTypeConstant {
+public enum DataTypeConstant {
 
     /**
      * 整数类型
