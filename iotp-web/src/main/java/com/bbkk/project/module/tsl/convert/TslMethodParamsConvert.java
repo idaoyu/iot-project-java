@@ -18,7 +18,8 @@ public interface TslMethodParamsConvert {
 
     TslMethodParamsConvert INSTANCE = Mappers.getMapper(TslMethodParamsConvert.class);
 
-    @Mapping(target = "id", source = "dto.id")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "identifier", source = "dto.identifier")
     @Mapping(target = "name", source = "dto.name")
     @Mapping(target = "description", source = "dto.description")
     @Mapping(target = "dataType", source = "dto.dataType")
@@ -26,8 +27,8 @@ public interface TslMethodParamsConvert {
     @Mapping(target = "maxValue", source = "dto.maxValue")
     @Mapping(target = "stepSize", source = "dto.stepSize")
     @Mapping(target = "unit", source = "dto.unit")
-    @Mapping(target = "type", source = "type")
+    @Mapping(target = "type", source = "dto.type")
     @Mapping(target = "methodId", ignore = true)
-    TslMethodParams operateTslMethodParamsDto2TslMethodParams(OperateTslMethodParamsDTO dto, String type);
+    TslMethodParams operateTslMethodParamsDto2TslMethodParams(OperateTslMethodParamsDTO dto);
 
 }

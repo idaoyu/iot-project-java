@@ -26,7 +26,7 @@ public interface ITslEnumValueService extends IService<TslEnumValue> {
      * @param masterId 关联物模型中 属性/方法/事件 的id
      * @return List<TslEnumValue>
      */
-    List<TslEnumValue> listByMasterId(String masterId, String source);
+    List<TslEnumValue> listByMasterIdAndSource(String masterId, String source);
 
     /**
      * 根据 id 更新描述

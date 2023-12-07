@@ -8,13 +8,13 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * 创建物模型方法接口入参
+ * 创建/修改 物模型方法接口入参
  *
  * @author 一条秋刀鱼zz qchenzexuan@vip.qq.com
  * @since 2023-12-05 21:26
  **/
 @Data
-public class CreateTslMethodParams {
+public class OperateTslMethodParams {
 
     /**
      * 方法唯一标识
@@ -44,15 +44,8 @@ public class CreateTslMethodParams {
      * 方法输入参数
      */
     @Valid
-    @NotEmpty(message = "方法输入参数不能为空")
-    private List<OperateTslMethodParamsDTO> inputParams;
-
-    /**
-     * 方法输出参数
-     */
-    @Valid
-    @NotEmpty(message = "方法输出参数不能为空")
-    private List<OperateTslMethodParamsDTO> outputParams;
+    @NotEmpty(message = "方法参数不能为空")
+    private List<OperateTslMethodParamsDTO> paramsList;
 
 
 }

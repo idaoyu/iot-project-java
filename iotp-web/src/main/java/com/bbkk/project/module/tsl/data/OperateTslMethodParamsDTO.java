@@ -20,7 +20,7 @@ public class OperateTslMethodParamsDTO {
      * 参数唯一标识
      */
     @NotEmpty(message = "参数唯一标识不能为空")
-    private String id;
+    private String identifier;
 
     /**
      * 参数名称
@@ -67,5 +67,12 @@ public class OperateTslMethodParamsDTO {
     @Valid
     @NotEmpty(message = "数据类型为枚举时，枚举值不能为空", groups = {ValidatedGroup.TslEnumDataTypeGroup.class})
     private List<OperateTslEnumValueParams> enumValueParamsList;
+
+    /**
+     * 用来区分是输入参数还是输出参数
+     * input：输入 output：输出
+     */
+    @NotEmpty(message = "输入/输出参数类型不能为空")
+    private String type;
 
 }

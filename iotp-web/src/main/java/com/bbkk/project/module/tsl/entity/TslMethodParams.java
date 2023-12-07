@@ -22,11 +22,14 @@ import lombok.NoArgsConstructor;
 @TableName(value = "tsl_method_params")
 public class TslMethodParams {
 
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
     /**
      * 参数唯一标识
      */
-    @TableId(value = "id", type = IdType.INPUT)
-    private String id;
+    @TableField(value = "identifier")
+    private String identifier;
 
     /**
      * 方法id

@@ -83,7 +83,7 @@ public class TslPropertyManageService {
         for (TslPropertyVO record : voPage.getRecords()) {
             if (record.getDataType().equals(ENUM.getDataType())) {
                 // 数据类型为枚举
-                List<TslEnumValue> enumValueList = tslEnumValueService.listByMasterId(record.getId(), EnumValueSourceConstant.PROPERTY.getSource());
+                List<TslEnumValue> enumValueList = tslEnumValueService.listByMasterIdAndSource(record.getId(), EnumValueSourceConstant.PROPERTY.getSource());
                 record.setEnumValueList(enumValueList);
             }
         }
@@ -143,7 +143,7 @@ public class TslPropertyManageService {
             return;
         }
         // 类型没有修改 但是内容可能被修改
-        List<TslEnumValue> list = tslEnumValueService.listByMasterId(tslProperty.getId(), EnumValueSourceConstant.PROPERTY.getSource());
+        List<TslEnumValue> list = tslEnumValueService.listByMasterIdAndSource(tslProperty.getId(), EnumValueSourceConstant.PROPERTY.getSource());
         Map<String, TslEnumValue> map = list.stream().collect(Collectors.toMap(TslEnumValue::getValue, v -> v));
         List<String> newValueList = Lists.newArrayList();
         for (OperateTslEnumValueParams enumValueParams : enumValueParamsList) {

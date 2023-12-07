@@ -31,7 +31,7 @@ public class TslEnumValueServiceImpl extends ServiceImpl<TslEnumValueMapper, Tsl
     }
 
     @Override
-    public List<TslEnumValue> listByMasterId(String masterId, String source) {
+    public List<TslEnumValue> listByMasterIdAndSource(String masterId, String source) {
         LambdaQueryWrapper<TslEnumValue> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(TslEnumValue::getMasterId, masterId);
         wrapper.eq(TslEnumValue::getSource, source);
