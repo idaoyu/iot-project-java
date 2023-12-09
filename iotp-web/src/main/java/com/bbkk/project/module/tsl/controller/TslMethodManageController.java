@@ -1,8 +1,11 @@
 package com.bbkk.project.module.tsl.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bbkk.project.module.tsl.constant.DataTypeConstant;
 import com.bbkk.project.module.tsl.data.OperateTslMethodParams;
 import com.bbkk.project.module.tsl.data.OperateTslMethodParamsDTO;
+import com.bbkk.project.module.tsl.data.PageGetTslMethodParams;
+import com.bbkk.project.module.tsl.data.PageGetTslMethodVO;
 import com.bbkk.project.module.tsl.service.TslMethodManageService;
 import com.bbkk.project.utils.ValidatedGroup;
 import com.bbkk.project.utils.ValidatedUtil;
@@ -56,6 +59,11 @@ public class TslMethodManageController {
             }
         }
         return tslMethodManageService.updateTslMethod(params);
+    }
+
+    @GetMapping
+    public IPage<PageGetTslMethodVO> pageGetTslMethod(@Validated PageGetTslMethodParams params) {
+        return tslMethodManageService.pageGetTslMethod(params);
     }
 
 }

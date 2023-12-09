@@ -1,13 +1,12 @@
 package com.bbkk.project.module.tsl.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.bbkk.project.exception.BizException;
 import com.bbkk.project.module.tsl.constant.DataTypeConstant;
 import com.bbkk.project.module.tsl.constant.EnumValueSourceConstant;
-import com.bbkk.project.module.tsl.convert.TslMethodParamsConvert;
-import com.bbkk.project.module.tsl.data.OperateTslEnumValueParams;
-import com.bbkk.project.module.tsl.data.OperateTslMethodParams;
-import com.bbkk.project.module.tsl.data.OperateTslMethodParamsDTO;
+import com.bbkk.project.module.tsl.convert.TslMethodConvert;
+import com.bbkk.project.module.tsl.data.*;
 import com.bbkk.project.module.tsl.entity.TslEnumValue;
 import com.bbkk.project.module.tsl.entity.TslMethod;
 import com.bbkk.project.module.tsl.entity.TslMethodParams;
@@ -36,7 +35,7 @@ public class TslMethodManageService {
     private final ITslMethodService tslMethodService;
     private final ITslMethodParamsService tslMethodParamsService;
     private final ITslEnumValueService tslEnumValueService;
-    private final TslMethodParamsConvert tslMethodParamsConvert;
+    private final TslMethodConvert tslMethodConvert;
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -107,7 +106,7 @@ public class TslMethodManageService {
         // 遍历接口入参中的 物模型方法参数
         for (OperateTslMethodParamsDTO dto : params.getParamsList()) {
             // 先将入参对象转换为 do 对象
-            TslMethodParams tslMethodParams = tslMethodParamsConvert.operateTslMethodParamsDto2TslMethodParams(dto);
+            TslMethodParams tslMethodParams = tslMethodConvert.operateTslMethodParamsDto2TslMethodParams(dto);
             // 如果数据库中不存在存在该数据 则为新增
             if (!map.containsKey(dto.getIdentifier() + dto.getType())) {
                 tslMethodParams.setMethodId(tslMethod.getId());
@@ -198,7 +197,7 @@ public class TslMethodManageService {
      * @param methodParams 参数入参
      */
     private void saveTslMethodParams(String methodId, OperateTslMethodParamsDTO methodParams) {
-        TslMethodParams tslMethodParams = tslMethodParamsConvert
+        TslMethodParams tslMethodParams = tslMethodConvert
                 .operateTslMethodParamsDto2TslMethodParams(methodParams);
         tslMethodParams.setMethodId(methodId);
         boolean saveMethodParams = tslMethodParamsService.save(tslMethodParams);
@@ -303,5 +302,31 @@ public class TslMethodManageService {
                 throw new BizException("修改物模型方法失败，请稍后重试");
             }
         }
+    }
+
+    public IPage<PageGetTslMethodVO> pageGetTslMethod(PageGetTslMethodParams params) {
+        // 这地方其实用 xml 更方便，但是分页时会有问题
+        IPage<TslMethod> page = tslMethodService.pageGetTslMethod(params);
+        return page.convert(v -> {
+            PageGetTslMethodVO vo = tslMethodConvert.tslMethod2PageGetTslMethodVO(v);
+            // 根据 id 查询方法参数
+            List<TslMethodParams> tslMethodParamsList = tslMethodParamsService.listByMethodId(vo.getId());
+            List<PageGetTslMethodParamsVO> list = tslMethodParamsList
+                    .stream()
+                    .map(tslMethodConvert::tslMethodParams2PageGetTslMethodParamsVO)
+                    .filter(p -> {
+                        // 如果是枚举类型，去查询对应的枚举值
+                        if (p.getDataType().equals(ENUM.getDataType())) {
+                            List<TslEnumValue> enumValueList = tslEnumValueService.listByMasterIdAndSource(
+                                    p.getId() + "", EnumValueSourceConstant.METHOD_PARAMS.getSource()
+                            );
+                            p.setEnumValueList(enumValueList);
+                        }
+                        return true;
+                    })
+                    .toList();
+            vo.setParamsList(list);
+            return vo;
+        });
     }
 }
