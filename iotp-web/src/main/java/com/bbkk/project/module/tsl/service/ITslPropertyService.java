@@ -29,4 +29,5 @@ public interface ITslPropertyService extends IService<TslProperty> {
      * @return 成功返回 true
      */
     Boolean updateTslProperty(TslProperty tslProperty, UpdateTslPropertyParams params, String id);
+
 }
