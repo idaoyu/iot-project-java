@@ -24,7 +24,7 @@ import java.util.Date;
 @TableName(value = "product_info")
 public class ProductInfo {
 
-    @TableId(value = "id", type = IdType.INPUT)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
