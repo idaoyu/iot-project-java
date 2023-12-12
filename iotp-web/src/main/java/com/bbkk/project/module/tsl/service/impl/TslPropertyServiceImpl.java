@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 一条秋刀鱼zz qchenzexuan@vip.qq.com
@@ -46,5 +47,12 @@ public class TslPropertyServiceImpl extends ServiceImpl<TslPropertyMapper, TslPr
         wrapper.set(TslProperty::getUpdateTime, new Date());
         wrapper.eq(TslProperty::getId, id);
         return super.update(wrapper);
+    }
+
+    @Override
+    public List<TslProperty> listByIdList(List<String> idList) {
+        LambdaQueryWrapper<TslProperty> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(TslProperty::getId, idList);
+        return super.list(wrapper);
     }
 }

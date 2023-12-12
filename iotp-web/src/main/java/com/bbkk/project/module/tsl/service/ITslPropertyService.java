@@ -6,6 +6,8 @@ import com.bbkk.project.module.tsl.data.PageGetTslPropertyParams;
 import com.bbkk.project.module.tsl.data.UpdateTslPropertyParams;
 import com.bbkk.project.module.tsl.entity.TslProperty;
 
+import java.util.List;
+
 /**
  * @author 一条秋刀鱼zz qchenzexuan@vip.qq.com
  * @since 2023-12-03 13:55
@@ -29,5 +31,13 @@ public interface ITslPropertyService extends IService<TslProperty> {
      * @return 成功返回 true
      */
     Boolean updateTslProperty(TslProperty tslProperty, UpdateTslPropertyParams params, String id);
+
+    /**
+     * 根据id list 查询属性
+     *
+     * @param idList id list
+     * @return List<TslProperty>
+     */
+    List<TslProperty> listByIdList(List<String> idList);
 
 }

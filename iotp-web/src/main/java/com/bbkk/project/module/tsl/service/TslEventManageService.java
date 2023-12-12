@@ -1,9 +1,13 @@
 package com.bbkk.project.module.tsl.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bbkk.project.exception.BizException;
 import com.bbkk.project.module.tsl.data.OperateTslEventParams;
+import com.bbkk.project.module.tsl.data.PageGetTslEventParams;
+import com.bbkk.project.module.tsl.data.PageGetTslEventVO;
 import com.bbkk.project.module.tsl.entity.TslEvent;
 import com.bbkk.project.module.tsl.entity.TslEventProperty;
+import com.bbkk.project.module.tsl.entity.TslProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -120,5 +124,22 @@ public class TslEventManageService {
             // todo 后续重构成高效一点的写法
             tslPropertyService.getOptById(propertyId).orElseThrow(() -> new BizException("物模型属性：" + propertyId + " 不存在"));
         }
+    }
+
+    public IPage<PageGetTslEventVO> pageGetTslEvent(PageGetTslEventParams params) {
+        IPage<TslEvent> page = tslEventService.pageGetTslEvent(params);
+        return page.convert(v -> {
+            PageGetTslEventVO.PageGetTslEventVOBuilder builder = PageGetTslEventVO.builder();
+            builder.id(v.getId());
+            builder.name(v.getName());
+            builder.description(v.getDescription());
+            builder.type(v.getType());
+            builder.createTime(v.getCreateTime());
+            builder.updateTime(v.getUpdateTime());
+            List<String> propertyIdList = tslEventPropertyService.listPropertyIdByEventId(v.getId());
+            List<TslProperty> tslPropertieList = tslPropertyService.listByIdList(propertyIdList);
+            builder.propertyList(tslPropertieList);
+            return builder.build();
+        });
     }
 }

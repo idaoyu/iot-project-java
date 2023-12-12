@@ -39,4 +39,12 @@ public class TslEventPropertyServiceImpl extends ServiceImpl<TslEventPropertyMap
         wrapper.in(TslEventProperty::getPropertyId, propertyId);
         return super.remove(wrapper);
     }
+
+    @Override
+    public List<String> listPropertyIdByEventId(String eventId) {
+        LambdaQueryWrapper<TslEventProperty> wrapper = Wrappers.lambdaQuery();
+        wrapper.select(TslEventProperty::getPropertyId);
+        wrapper.eq(TslEventProperty::getEventId, eventId);
+        return super.list(wrapper).stream().map(TslEventProperty::getPropertyId).toList();
+    }
 }

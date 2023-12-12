@@ -36,4 +36,12 @@ public interface ITslEventPropertyService extends IService<TslEventProperty> {
      */
     boolean removeByEventIdAndPropertyIdList(String eventId, List<String> propertyId);
 
+    /**
+     * 根据事件id查询对应的属性id
+     *
+     * @param eventId 事件id
+     * @return 属性id集合
+     */
+    List<String> listPropertyIdByEventId(String eventId);
+
 }

@@ -1,6 +1,9 @@
 package com.bbkk.project.module.tsl.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bbkk.project.module.tsl.data.OperateTslEventParams;
+import com.bbkk.project.module.tsl.data.PageGetTslEventParams;
+import com.bbkk.project.module.tsl.data.PageGetTslEventVO;
 import com.bbkk.project.module.tsl.service.TslEventManageService;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +37,11 @@ public class TslEventManageController {
     @PutMapping
     public String updateTslEvent(@RequestBody @Validated OperateTslEventParams params) {
         return tslEventManageService.updateTslEvent(params);
+    }
+
+    @GetMapping
+    public IPage<PageGetTslEventVO> pageGetTslEvent(@Validated PageGetTslEventParams params) {
+        return tslEventManageService.pageGetTslEvent(params);
     }
 
 }
