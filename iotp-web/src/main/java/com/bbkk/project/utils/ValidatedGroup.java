@@ -15,4 +15,12 @@ public class ValidatedGroup {
 
     }
 
+    public interface UpdateGroup {
+
+    }
+
+    public interface CreateGroup {
+
+    }
+
 }
