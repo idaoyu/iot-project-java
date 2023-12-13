@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 /**
  * 产品信息管理接口 业务逻辑
  *
@@ -126,6 +128,72 @@ public class ProductInfoManageService {
         if (!rmInfoTsl) {
             throw new BizException("删除产品失败，请稍后重试");
         }
+        return "成功";
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public String updateProductInfo(OperationProductInfoParams params) {
+        ProductInfo productInfo = productInfoService.getOptById(params.getId()).orElseThrow(() -> new BizException("要修改的产品不存在"));
+        productInfo.setName(params.getName());
+        productInfo.setDescription(params.getDescription());
+        productInfo.setImageUrl(params.getImageUrl());
+        if (params.getType() != null) {
+            ProductType productType = productTypeService.getOptById(params.getType()).orElseThrow(() -> new BizException("商品类目不存在"));
+            productInfo.setType(productType.getId());
+        }
+        productInfo.setUpdateTime(new Date());
+        boolean update = productInfoService.updateById(productInfo);
+        if (!update) {
+            throw new BizException("修改产品信息失败，请稍后重试");
+        }
+        boolean rmSuccess = productInfoTslService.removeByProductId(params.getId());
+        if (!rmSuccess) {
+            throw new BizException("修改产品信息失败，请稍后重试");
+        }
+        for (ProductInfoAndTslDTO productInfoAndTslDTO : params.getTslList()) {
+            String type = productInfoAndTslDTO.getType();
+            String tslId = productInfoAndTslDTO.getTslId();
+            if (type.equals(TslTypeConstant.PROPERTY.getValue())) {
+                tslPropertyService.getOptById(tslId).orElseThrow(() -> new BizException("物模型属性id：" + tslId + "不存在"));
+                ProductInfoTsl productInfoTsl = ProductInfoTsl
+                        .builder()
+                        .tslId(tslId)
+                        .tslType(TslTypeConstant.PROPERTY.getValue())
+                        .productId(productInfo.getId())
+                        .build();
+                boolean saveInfoTsl = productInfoTslService.save(productInfoTsl);
+                if (!saveInfoTsl) {
+                    throw new BizException("修改产品失败，请稍后重试");
+                }
+            } else if (type.equals(TslTypeConstant.METHOD.getValue())) {
+                tslMethodService.getOptById(tslId).orElseThrow(() -> new BizException("物模型方法id：" + tslId + "不存在"));
+                ProductInfoTsl productInfoTsl = ProductInfoTsl
+                        .builder()
+                        .tslId(tslId)
+                        .tslType(TslTypeConstant.METHOD.getValue())
+                        .productId(productInfo.getId())
+                        .build();
+                boolean saveInfoTsl = productInfoTslService.save(productInfoTsl);
+                if (!saveInfoTsl) {
+                    throw new BizException("修改产品失败，请稍后重试");
+                }
+            } else if (type.equals(TslTypeConstant.EVENT.getValue())) {
+                tslEventService.getOptById(tslId).orElseThrow(() -> new BizException("物模型事件id：" + tslId + "不存在"));
+                ProductInfoTsl productInfoTsl = ProductInfoTsl
+                        .builder()
+                        .tslId(tslId)
+                        .tslType(TslTypeConstant.EVENT.getValue())
+                        .productId(productInfo.getId())
+                        .build();
+                boolean saveInfoTsl = productInfoTslService.save(productInfoTsl);
+                if (!saveInfoTsl) {
+                    throw new BizException("修改产品失败，请稍后重试");
+                }
+            } else {
+                throw new BizException("绑定的物模型类别字段错误");
+            }
+        }
+
         return "成功";
     }
 }

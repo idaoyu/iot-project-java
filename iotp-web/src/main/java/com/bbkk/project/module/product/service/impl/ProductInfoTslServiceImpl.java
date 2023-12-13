@@ -8,6 +8,8 @@ import com.bbkk.project.module.product.mapper.ProductInfoTslMapper;
 import com.bbkk.project.module.product.service.IProductInfoTslService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author 一条秋刀鱼zz qchenzexuan@vip.qq.com
  * @since 2023-12-12 20:34
@@ -24,5 +26,12 @@ public class ProductInfoTslServiceImpl extends ServiceImpl<ProductInfoTslMapper,
             return true;
         }
         return super.remove(wrapper);
+    }
+
+    @Override
+    public List<ProductInfoTsl> listByProductId(Long productId) {
+        LambdaQueryWrapper<ProductInfoTsl> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(ProductInfoTsl::getProductId, productId);
+        return super.list(wrapper);
     }
 }

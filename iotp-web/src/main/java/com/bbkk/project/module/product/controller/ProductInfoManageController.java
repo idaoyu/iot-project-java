@@ -5,6 +5,7 @@ import com.bbkk.project.module.product.data.OperationProductInfoParams;
 import com.bbkk.project.module.product.data.PageGetProductInfoParams;
 import com.bbkk.project.module.product.data.PageGetProductInfoVO;
 import com.bbkk.project.module.product.service.ProductInfoManageService;
+import com.bbkk.project.utils.ValidatedGroup;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -37,6 +38,11 @@ public class ProductInfoManageController {
     @DeleteMapping
     public String deleteProductInfo(@NotNull(message = "id不能为空") Long id) {
         return productInfoManageService.deleteProductInfo(id);
+    }
+
+    @PutMapping
+    public String updateProductInfo(@RequestBody @Validated(ValidatedGroup.UpdateGroup.class) OperationProductInfoParams params) {
+        return productInfoManageService.updateProductInfo(params);
     }
 
 }
