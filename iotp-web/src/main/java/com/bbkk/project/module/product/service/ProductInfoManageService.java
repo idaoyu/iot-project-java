@@ -40,7 +40,7 @@ public class ProductInfoManageService {
     private final ProductInfoConvert productInfoConvert;
 
     public IPage<PageGetProductInfoVO> pageGetProductInfo(PageGetProductInfoParams params) {
-        // todo 待重构
+        // todo 待重构 需要考虑物模型等数据的展示方法
         IPage<ProductInfo> page = productInfoService.pageGetProductInfo(params);
         return page.convert(v -> {
             PageGetProductInfoVO.PageGetProductInfoVOBuilder builder = PageGetProductInfoVO.builder();
