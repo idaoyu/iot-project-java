@@ -11,16 +11,7 @@ spring:
       write-dates-as-timestamps: true
   freemarker:
     check-template-location: false
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    path: /v3/api-docs
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn
-    enable-swagger-models: true
-    swagger-model-name: 实体类列表
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1024MB
