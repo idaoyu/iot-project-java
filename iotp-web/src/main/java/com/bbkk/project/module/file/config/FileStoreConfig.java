@@ -20,4 +20,24 @@ public class FileStoreConfig {
      */
     private String type;
 
+    /**
+     * 使用 minio 或 s3 oss 时 的服务器端点
+     */
+    private String endpoint;
+
+    /**
+     * access key
+     */
+    private String accessKey;
+
+    /**
+     * secret key
+     */
+    private String secretKey;
+
+    /**
+     * 存储桶名称
+     */
+    private String buckets;
+
 }

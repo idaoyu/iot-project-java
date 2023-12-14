@@ -1,6 +1,7 @@
 package com.bbkk.project.module.web.handler;
 
 import com.bbkk.project.exception.BizException;
+import com.bbkk.project.exception.UploadFileException;
 import com.bbkk.project.module.web.data.ResultBody;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -27,18 +28,6 @@ import static com.bbkk.project.constant.WebRequestErrorCodeConstant.*;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    /**
-     * 默认的系统异常处理器
-     *
-     * @param ex Exception
-     * @return CommonResultDTO
-     */
-    @ExceptionHandler(value = Exception.class)
-    public ResultBody defaultExceptionHandler(Exception ex) {
-        log.info("系统出现未知异常", ex);
-        return ResultBody.error(DEFAULT_EXCEPTION.getErrorCode(), DEFAULT_EXCEPTION.getErrorMessage());
-    }
 
     /**
      * 参数校验失败异常处理器
@@ -95,6 +84,30 @@ public class GlobalExceptionHandler {
     public ResultBody notFountExceptionHandler(NoHandlerFoundException ex) {
         String message = ex.getRequestURL() + " 404";
         return ResultBody.error(NOT_FOUNT_EXCEPTION.getErrorCode(), message);
+    }
+
+    /**
+     * 上传文件异常处理器
+     *
+     * @param ex UploadFileException
+     * @return ResultBody
+     */
+    @ExceptionHandler(value = UploadFileException.class)
+    public ResultBody uploadFileExceptionHandler(UploadFileException ex) {
+        log.error("上传文件时产生异常", ex);
+        return ResultBody.error(UPLOAD_FILE_EXCEPTION.getErrorCode(), UPLOAD_FILE_EXCEPTION.getErrorMessage());
+    }
+
+    /**
+     * 默认的系统异常处理器
+     *
+     * @param ex Exception
+     * @return CommonResultDTO
+     */
+    @ExceptionHandler(value = Exception.class)
+    public ResultBody defaultExceptionHandler(Exception ex) {
+        log.info("系统出现未知异常", ex);
+        return ResultBody.error(DEFAULT_EXCEPTION.getErrorCode(), DEFAULT_EXCEPTION.getErrorMessage());
     }
 
 }

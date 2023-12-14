@@ -25,6 +25,7 @@
         <fastjson.version>2.0.32</fastjson.version>
         <jjwt.version>0.12.3</jjwt.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <minio-client.version>8.5.7</minio-client.version>
     </properties>
 
     <!-- 子模块 -->
@@ -123,6 +124,12 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+            <!-- minio java client -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio-client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

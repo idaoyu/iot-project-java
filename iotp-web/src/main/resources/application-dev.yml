@@ -14,3 +14,7 @@ spring:
       connect-timeout: 10000
 file-store:
   type: minio
+  endpoint: ENC(ce9MolRrAc8AfzlQd1+Sicned96TfFN7qeH+8q2JtDpxvBcmqx+29YtKIyhnN9k+pzXODsoGkP3lVcexyWuAIw==)
+  access-key: ENC(01w0jS27O+twNSIrCGhU1OYQ0JVfHL/wxSSyLWyWQ9166SlsSGLPJ/QIX2STptFisgJs6me4q5d0O4ywnlRqjA==)
+  secret-key: ENC(UWFBjy/nd9M1x4O6FyFdYtpZ5abczi46V6gTvXKvOQJL3omIgLXJVFs6xRJPEap1ncFqRZgiPygb+viwTSVn9zBCWimYyOcLDhlew00LHMA=)
+  buckets: iot

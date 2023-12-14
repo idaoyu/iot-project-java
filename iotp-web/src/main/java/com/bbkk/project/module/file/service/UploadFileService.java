@@ -5,6 +5,7 @@ import com.bbkk.project.module.file.config.FileStoreConfig;
 import com.bbkk.project.module.file.data.UploadFileParams;
 import com.bbkk.project.module.file.data.UploadFileVO;
 import com.bbkk.project.module.file.entity.ResourceRecords;
+import com.bbkk.project.module.file.utils.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class UploadFileService {
 
     private final IResourceRecordsService resourceRecordsService;
     private final FileStoreConfig fileStoreConfig;
+    private final FileUploadUtil fileUploadUtil;
 
 
     public UploadFileVO uploadFile(UploadFileParams params) {
@@ -32,16 +34,23 @@ public class UploadFileService {
         String originalFilename = file.getOriginalFilename();
         // 获取后缀 例如 ".exe" 或不存在后缀 ""
         String suffix = buildSuffix(originalFilename);
+        // 生成在存储介质中的文件名字
+        String localFileName = IdUtil.fastSimpleUUID() + suffix;
+        // 上传文件
+        String accessFileUrl = fileUploadUtil.uploadFile(params.getFile(), localFileName);
         // 保存文件上传记录
         ResourceRecords.ResourceRecordsBuilder builder = ResourceRecords.builder();
         builder.originalFileName(file.getOriginalFilename());
-        builder.fileName(IdUtil.fastSimpleUUID() + suffix);
+        builder.fileName(localFileName);
         builder.storeType(fileStoreConfig.getType());
-        builder.tag(params.getTag());
+        builder.url(accessFileUrl);
+        if (StringUtils.isNotBlank(params.getTag())) {
+            builder.tag(params.getTag());
+        }
         builder.createTime(new Date());
         builder.updateTime(new Date());
         resourceRecordsService.save(builder.build());
-        return UploadFileVO.builder().fileUrl("https://oss.zizyy.com/temp").build();
+        return UploadFileVO.builder().fileUrl(accessFileUrl).build();
     }
 
     private String buildSuffix(String originalFilename) {

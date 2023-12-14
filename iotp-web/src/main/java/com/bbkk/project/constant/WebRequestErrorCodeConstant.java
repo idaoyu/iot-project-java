@@ -20,6 +20,8 @@ public enum WebRequestErrorCodeConstant {
     REQUEST_PARAMS_EXCEPTION("-1", "接口参数校验失败"),
 
     BIZ_EXCEPTION("-2", null),
+
+    UPLOAD_FILE_EXCEPTION("-3", "文件上传失败"),
     ;
 
     /**
