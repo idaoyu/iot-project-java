@@ -1,6 +1,9 @@
 package com.bbkk.project.module.device.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bbkk.project.module.device.data.OperationDeviceInfoParams;
+import com.bbkk.project.module.device.data.PageGetDeviceInfoParams;
+import com.bbkk.project.module.device.entity.DeviceInfo;
 import com.bbkk.project.module.device.service.DeviceInfoManageService;
 import com.bbkk.project.utils.ValidatedGroup;
 import jakarta.validation.constraints.NotEmpty;
@@ -35,6 +38,11 @@ public class DeviceInfoManageController {
     @PutMapping
     public String updateDeviceInfo(@RequestBody @Validated(ValidatedGroup.UpdateGroup.class) OperationDeviceInfoParams params) {
         return deviceInfoManageService.updateDeviceInfo(params);
+    }
+
+    @GetMapping
+    public IPage<DeviceInfo> pageGet(@Validated PageGetDeviceInfoParams params) {
+        return deviceInfoManageService.pageGet(params);
     }
 
 }

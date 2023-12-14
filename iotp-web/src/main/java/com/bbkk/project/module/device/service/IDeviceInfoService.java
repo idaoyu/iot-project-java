@@ -1,6 +1,8 @@
 package com.bbkk.project.module.device.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bbkk.project.module.device.data.PageGetDeviceInfoParams;
 import com.bbkk.project.module.device.entity.DeviceInfo;
 
 /**
@@ -17,6 +19,14 @@ public interface IDeviceInfoService extends IService<DeviceInfo> {
      * @return 存在返回 true
      */
     boolean existByProductIdAndName(Long productId, String name);
+
+    /**
+     * 分页查询设备信息
+     *
+     * @param params PageGetDeviceInfoParams params
+     * @return IPage<PageGetDeviceInfoParams params>
+     */
+    IPage<DeviceInfo> pageGet(PageGetDeviceInfoParams params);
 
 }
 

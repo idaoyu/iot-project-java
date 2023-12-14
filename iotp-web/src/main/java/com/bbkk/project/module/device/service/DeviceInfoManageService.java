@@ -1,7 +1,9 @@
 package com.bbkk.project.module.device.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bbkk.project.exception.BizException;
 import com.bbkk.project.module.device.data.OperationDeviceInfoParams;
+import com.bbkk.project.module.device.data.PageGetDeviceInfoParams;
 import com.bbkk.project.module.device.entity.DeviceInfo;
 import com.bbkk.project.module.product.constant.ProductAuthType;
 import com.bbkk.project.module.product.entity.ProductInfo;
@@ -76,4 +78,7 @@ public class DeviceInfoManageService {
         return "成功";
     }
 
+    public IPage<DeviceInfo> pageGet(PageGetDeviceInfoParams params) {
+        return deviceInfoService.pageGet(params);
+    }
 }
