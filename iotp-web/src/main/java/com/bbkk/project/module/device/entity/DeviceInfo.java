@@ -1,4 +1,4 @@
-package com.bbkk.project.module.product.entity;
+package com.bbkk.project.module.device.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -12,62 +12,38 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 产品信息表
+ * 设备信息
  *
  * @author 一条秋刀鱼zz qchenzexuan@vip.qq.com
- * @since 2023/12/12 18:44
+ * @since 2023/12/14 20:26
  **/
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "product_info")
-public class ProductInfo {
+@TableName(value = "device_info")
+public class DeviceInfo {
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private String id;
 
     /**
-     * 产品名字
+     * 产品id
+     */
+    @TableField(value = "product_id")
+    private Long productId;
+
+    /**
+     * 设备名字
      */
     @TableField(value = "`name`")
     private String name;
 
     /**
-     * 产品描述
+     * 描述
      */
     @TableField(value = "description")
     private String description;
-
-    /**
-     * 产品图片地址
-     */
-    @TableField(value = "image_url")
-    private String imageUrl;
-
-    /**
-     * 产品分类（存放分类表id）
-     */
-    @TableField(value = "`type`")
-    private Long type;
-
-    /**
-     * 需要认证
-     */
-    @TableField(value = "need_auth")
-    private Boolean needAuth;
-
-    /**
-     * 认证类型
-     */
-    @TableField(value = "auth_type")
-    private String authType;
-
-    /**
-     * 产品状态
-     */
-    @TableField(value = "`status`")
-    private String status;
 
     /**
      * 创建时间

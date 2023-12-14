@@ -2,6 +2,8 @@ package com.bbkk.project.module.product.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bbkk.project.exception.BizException;
+import com.bbkk.project.module.device.service.IDeviceEvidencePoolService;
+import com.bbkk.project.module.product.constant.ProductAuthType;
 import com.bbkk.project.module.product.constant.TslTypeConstant;
 import com.bbkk.project.module.product.convert.ProductInfoConvert;
 import com.bbkk.project.module.product.data.OperationProductInfoParams;
@@ -15,6 +17,7 @@ import com.bbkk.project.module.tsl.service.ITslEventService;
 import com.bbkk.project.module.tsl.service.ITslMethodService;
 import com.bbkk.project.module.tsl.service.ITslPropertyService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,11 +39,12 @@ public class ProductInfoManageService {
     private final ITslPropertyService tslPropertyService;
     private final ITslMethodService tslMethodService;
     private final ITslEventService tslEventService;
+    private final IDeviceEvidencePoolService deviceEvidencePoolService;
 
     private final ProductInfoConvert productInfoConvert;
 
     public IPage<PageGetProductInfoVO> pageGetProductInfo(PageGetProductInfoParams params) {
-        // todo 待重构 需要考虑物模型等数据的展示方法
+        // todo 待重构 需要考虑物模型、认证方式等数据的展示方法
         IPage<ProductInfo> page = productInfoService.pageGetProductInfo(params);
         return page.convert(v -> {
             PageGetProductInfoVO.PageGetProductInfoVOBuilder builder = PageGetProductInfoVO.builder();
@@ -67,9 +71,20 @@ public class ProductInfoManageService {
             ProductType productType = productTypeService.getOptById(params.getType()).orElseThrow(() -> new BizException("产品类目错误"));
             productInfo.setType(productType.getId());
         }
+        // 默认的状态就是开发中，除非用户手动指定状态
+        if (StringUtils.isNotBlank(params.getStatus())) {
+            productInfo.setStatus(params.getStatus());
+        } else {
+            // todo 懒得写枚举了，如果后续状态有业务逻辑意义再写吧
+            productInfo.setStatus("dev");
+        }
         boolean save = productInfoService.save(productInfo);
         if (!save) {
             throw new BizException("创建产品失败，请稍后重试");
+        }
+        // 需要认证，并且认证类型为一个产品一个密钥时，在创建产品时生成密钥
+        if (productInfo.getNeedAuth() && productInfo.getAuthType().equals(ProductAuthType.BIND_PRODUCT.getType())) {
+            deviceEvidencePoolService.generateAuthKeyAndBind(productInfo.getId(), null);
         }
         for (ProductInfoAndTslDTO productInfoAndTslDTO : params.getTslList()) {
             String type = productInfoAndTslDTO.getType();
@@ -128,11 +143,13 @@ public class ProductInfoManageService {
         if (!rmInfoTsl) {
             throw new BizException("删除产品失败，请稍后重试");
         }
+        // todo 需要增加删除设备认证凭据表（device_evidence_pool）数据
         return "成功";
     }
 
     @Transactional(rollbackFor = Exception.class)
     public String updateProductInfo(OperationProductInfoParams params) {
+        // todo 暂时不支持修改是否需要认证和认证类型 后期增加用 mq 异步方式平滑修改
         ProductInfo productInfo = productInfoService.getOptById(params.getId()).orElseThrow(() -> new BizException("要修改的产品不存在"));
         productInfo.setName(params.getName());
         productInfo.setDescription(params.getDescription());

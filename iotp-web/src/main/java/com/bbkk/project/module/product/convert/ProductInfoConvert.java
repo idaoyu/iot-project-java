@@ -22,7 +22,10 @@ public interface ProductInfoConvert {
     @Mapping(source = "description", target = "description")
     @Mapping(source = "imageUrl", target = "imageUrl")
     @Mapping(source = "type", target = "type")
+    @Mapping(source = "needAuth", target = "needAuth")
+    @Mapping(source = "authType", target = "authType")
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", ignore = true)
     @Mapping(target = "createTime", expression = "java(new java.util.Date())")
     @Mapping(target = "updateTime", expression = "java(new java.util.Date())")
     ProductInfo operationProductInfoParams2ProductInfo(OperationProductInfoParams params);

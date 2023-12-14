@@ -1,5 +1,6 @@
 package com.bbkk.project.module.product.data;
 
+import com.bbkk.project.utils.ValidatedGroup;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
@@ -15,13 +16,13 @@ public class ProductInfoAndTslDTO {
     /**
      * 物模型id
      */
-    @NotEmpty(message = "物模型id不能为空")
+    @NotEmpty(message = "物模型id不能为空", groups = {ValidatedGroup.UpdateGroup.class, ValidatedGroup.CreateGroup.class})
     private String tslId;
 
     /**
      * 物模型类别（属性、方法、事件）
      */
-    @NotEmpty(message = "物模型类别不能为空")
+    @NotEmpty(message = "物模型类别不能为空", groups = {ValidatedGroup.UpdateGroup.class, ValidatedGroup.CreateGroup.class})
     private String type;
 
 }

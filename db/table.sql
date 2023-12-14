@@ -1,3 +1,81 @@
+create table if not exists device_evidence_pool
+(
+    id          bigint auto_increment
+        primary key,
+    product_id  bigint      null comment '产品id',
+    device_id   varchar(32) null comment '设备id',
+    secret_key  text        null comment '密钥',
+    create_time datetime    null comment '创建时间',
+    update_time datetime    null comment '修改时间'
+)
+    comment '设备认证凭据池';
+
+create index device_evidence_pool_product_id_device_id_index
+    on device_evidence_pool (product_id, device_id);
+
+create table if not exists device_info
+(
+    id          varchar(32) not null
+        primary key,
+    product_id  bigint      null comment '产品id',
+    name        varchar(32) null comment '设备名字',
+    description text        null comment '描述',
+    create_time datetime    null comment '创建时间',
+    update_time datetime    null comment '修改时间',
+    constraint device_info_product_id_name_uindex
+        unique (product_id, name)
+)
+    comment '设备信息';
+
+create table if not exists product_info
+(
+    id          bigint auto_increment
+        primary key,
+    name        varchar(32)  null comment '产品名字',
+    description text         null comment '产品描述',
+    image_url   varchar(191) null comment '产品图片地址',
+    type        bigint       null comment '产品分类（存放分类表id）',
+    need_auth   tinyint(1)   null comment '需要认证',
+    auth_type   varchar(32)  null comment '认证类型（一个设备一个密钥/一个产品一个密钥）',
+    status      varchar(16)  null comment '产品状态（开发中/已上线/修改中等）',
+    create_time datetime     null comment '创建时间',
+    update_time datetime     null comment '修改时间'
+)
+    comment '产品信息表';
+
+create table if not exists product_info_tsl
+(
+    product_id bigint      null comment '产品id',
+    tsl_id     varchar(64) null comment '物模型id',
+    tsl_type   varchar(32) null comment '物模型类型（属性、方法、事件）'
+)
+    comment '产品信息与物模型关联表';
+
+create table if not exists product_type
+(
+    id          bigint auto_increment
+        primary key,
+    name        varchar(32) null comment '类目名字',
+    description text        null comment '类目描述',
+    create_time datetime    null comment '创建时间',
+    update_time datetime    null comment '修改时间'
+)
+    comment '产品类目';
+
+create table if not exists resource_records
+(
+    id                 bigint auto_increment comment '资源id'
+        primary key,
+    original_file_name varchar(64)  null comment '原始文件名字',
+    file_name          varchar(64)  null comment '在存储介质中的文件名字',
+    store_type         varchar(32)  null comment '存储类型（本地、minio、aliyun oss等）',
+    url                varchar(128) null comment '完整的访问该资源的链接',
+    tag                varchar(32)  null comment '标签',
+    create_time        datetime     null comment '创建时间',
+    update_time        datetime     null comment '修改时间'
+)
+    comment '静态资源的记录表';
+
 create table if not exists system_permission
 (
     id          bigint auto_increment comment '权限id'

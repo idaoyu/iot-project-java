@@ -31,7 +31,7 @@ public class ProductInfoManageController {
     }
 
     @PostMapping
-    public String createProductInfo(@RequestBody @Validated OperationProductInfoParams params) {
+    public String createProductInfo(@RequestBody @Validated(ValidatedGroup.CreateGroup.class) OperationProductInfoParams params) {
         return productInfoManageService.createProductInfo(params);
     }
 
