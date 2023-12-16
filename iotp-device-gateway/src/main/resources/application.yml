@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: iotp-device-gateway
+  profiles:
+    active: local

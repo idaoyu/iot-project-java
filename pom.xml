@@ -34,6 +34,7 @@
         <module>iotp-common</module>
         <module>iotp-web</module>
         <module>iotp-mq</module>
+        <module>iotp-device-gateway</module>
     </modules>
 
     <!-- 声明所有子模块都需要导入的依赖 -->
