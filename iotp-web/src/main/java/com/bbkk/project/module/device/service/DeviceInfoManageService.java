@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bbkk.project.exception.BizException;
 import com.bbkk.project.module.device.data.OperationDeviceInfoParams;
 import com.bbkk.project.module.device.data.PageGetDeviceInfoParams;
+import com.bbkk.project.module.device.data.PageGetDeviceInfoVO;
 import com.bbkk.project.module.device.entity.DeviceInfo;
 import com.bbkk.project.module.product.constant.ProductAuthType;
 import com.bbkk.project.module.product.entity.ProductInfo;
@@ -78,7 +79,22 @@ public class DeviceInfoManageService {
         return "成功";
     }
 
-    public IPage<DeviceInfo> pageGet(PageGetDeviceInfoParams params) {
-        return deviceInfoService.pageGet(params);
+    public IPage<PageGetDeviceInfoVO> pageGet(PageGetDeviceInfoParams params) {
+        IPage<DeviceInfo> page = deviceInfoService.pageGet(params);
+        return page.convert(v -> {
+            PageGetDeviceInfoVO.PageGetDeviceInfoVOBuilder builder = PageGetDeviceInfoVO.builder();
+            builder.id(v.getId());
+            builder.name(v.getName());
+            builder.description(v.getDescription());
+            builder.createTime(v.getCreateTime());
+            builder.updateTime(v.getUpdateTime());
+            if (v.getProductId() != null) {
+                ProductInfo productInfo = productInfoService.getById(v.getProductId());
+                if (productInfo != null) {
+                    builder.productInfo(productInfo);
+                }
+            }
+            return builder.build();
+        });
     }
 }

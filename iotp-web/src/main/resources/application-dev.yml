@@ -18,3 +18,10 @@ file-store:
   access-key: ENC(01w0jS27O+twNSIrCGhU1OYQ0JVfHL/wxSSyLWyWQ9166SlsSGLPJ/QIX2STptFisgJs6me4q5d0O4ywnlRqjA==)
   secret-key: ENC(UWFBjy/nd9M1x4O6FyFdYtpZ5abczi46V6gTvXKvOQJL3omIgLXJVFs6xRJPEap1ncFqRZgiPygb+viwTSVn9zBCWimYyOcLDhlew00LHMA=)
   buckets: iot
+decorator:
+  datasource:
+    p6spy:
+      # 如果不想打印执行的 sql 把这个改成 false
+      enable-logging: false
+      log-format: "time:%(executionTime) || sql:%(sql)"
+      logging: slf4j
