@@ -27,6 +27,20 @@ create table if not exists device_info
 )
     comment '设备信息';
 
+create table if not exists device_shadow
+(
+    id          bigint auto_increment
+        primary key,
+    device_id   varchar(32) null comment '设备id',
+    data        longtext    null comment '影子数据',
+    create_time datetime    null comment '创建时间',
+    update_time datetime    null comment '修改时间'
+)
+    comment '设备影子';
+
+create index device_shadow_device_id_index
+    on device_shadow (device_id);
+
 create table if not exists product_info
 (
     id          bigint auto_increment
