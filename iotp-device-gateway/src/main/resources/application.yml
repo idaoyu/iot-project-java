@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: iotp-device-gateway
-  profiles:
-    active: local
-netty-mqtt:
-  port: 9010
-server:
-  port: 9091
