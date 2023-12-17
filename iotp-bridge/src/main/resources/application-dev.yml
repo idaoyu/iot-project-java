@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(aa4jjFWlZp5yMyn78L7tX56HvQdjl/laoDhLb93iPAZ5k2Jz3xQWiJxB0sWY+VjKIMc7N5dMoccek2sO5NIIiReGns3UzdyF3+Yvv+i4Sn+zr6T2rEm+lvv5AoAOvWJB5zVzbdYkPjq6mirFuxQJEmygJJeX2szcvw+oZ/nuCsdusNTdXp1TKOidgKtpt3FbYYL8WuRi9f+SKoClYLPoGMb6/UrTHdFW1tBMY+5wtI2C01uP/03G/8youiT1eH1wT2qp0sx1zRMdNpWjTWtcyw==)
+    username: ENC(K3C5Ec5sD0+ZnZcuDxeLopaJD5UqD+jKaQLUzbHpPFV94LDpRcmaC/GPwXbRQqeD/s609M1sI96iLTiwzBTWgA==)
+    password: ENC(fVNQYvnHHl14FKevHvfkyRS4GlU824oRTrIXZ9yfb6Z56tESyJGCmb6ITHWAloD8JszvDoDe3Ol0dTdxerAyqw==)
+  data:
+    redis:
+      database: 0
+      port: 6379
+      host: ENC(ie8hf2W1RPMjzigdJK1MnhtQF3rmkDJGMgS6XvRFqOVkSuADmKLXkhO9xomPrDRA)
+      password: ENC(kDrmhVebkri4qOWkNYV6qTAfceC5u7YoDANKOfspQKnghZjKOQZceqW6y+CSvJ/T70NENbiWdV0h+RZrFYZq+g==)
+      timeout: 1000
+      connect-timeout: 10000
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: iot-group
+    send-message-timeout: 3000
+decorator:
+  datasource:
+    p6spy:
+      # 如果不想打印执行的 sql 把这个改成 false
+      enable-logging: false
+      log-format: "time:%(executionTime) || sql:%(sql)"
+      logging: slf4j
