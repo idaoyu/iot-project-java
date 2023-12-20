@@ -27,6 +27,7 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <minio-client.version>8.5.7</minio-client.version>
         <p6spy.version>1.9.1</p6spy.version>
+        <influxdb-client.version>6.6.0</influxdb-client.version>
     </properties>
 
     <!-- 子模块 -->
@@ -138,6 +139,12 @@
                 <groupId>com.github.gavlyukovskiy</groupId>
                 <artifactId>p6spy-spring-boot-starter</artifactId>
                 <version>${p6spy.version}</version>
+            </dependency>
+            <!-- influxdb java client -->
+            <dependency>
+                <groupId>com.influxdb</groupId>
+                <artifactId>influxdb-client-java</artifactId>
+                <version>${influxdb-client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
