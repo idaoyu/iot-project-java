@@ -1,4 +1,4 @@
-package com.bbkk.project.data;
+package com.bbkk.project.data.common;
 
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +19,10 @@ public class EmqxWebhookResponse {
 
     public static EmqxWebhookResponse success() {
         return EmqxWebhookResponse.builder().result("ok").message("success").build();
+    }
+
+    public static EmqxWebhookResponse error(String message) {
+        return EmqxWebhookResponse.builder().result("error").message(message).build();
     }
 
 }

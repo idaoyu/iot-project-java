@@ -1,15 +1,15 @@
 package com.bbkk.project.controller;
 
-import com.alibaba.fastjson2.JSONObject;
-import com.bbkk.project.data.EmqxWebhookResponse;
+import com.bbkk.project.data.EmqxWebhookMqttParams;
+import com.bbkk.project.data.common.EmqxWebhookResponse;
+import com.bbkk.project.service.EmqxWebHookHandlerService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 /**
  * EMQX Webhook 处理接口
@@ -20,13 +20,21 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/emqxWebhook")
+@RequestMapping("/api/emqx")
 public class EmqxWebHookHandlerController {
 
+    private final EmqxWebHookHandlerService emqxWebHookHandlerService;
+
+    /**
+     * emqx 消息发布
+     *
+     * @param params EmqxWebhookMqttParams
+     * @return EmqxWebhookResponse
+     */
     @PostMapping("/publishMessage")
-    public EmqxWebhookResponse publishMessageHandler(@RequestBody Map<String, Object> data) {
-        log.info("客户端发布消息 消息内容: {}", JSONObject.toJSONString(data));
-        return EmqxWebhookResponse.success();
+    public EmqxWebhookResponse publishMessageHandler(
+            @RequestBody EmqxWebhookMqttParams params, HttpServletResponse response) {
+        return emqxWebHookHandlerService.publishMessageHandler(params, response);
     }
 
 }
