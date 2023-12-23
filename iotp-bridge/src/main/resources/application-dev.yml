@@ -1,7 +1,7 @@
 rocketmq:
-  name-server: 123.207.202.228:9876
+  name-server: ENC(Xyw2NH4Z8b3ePg7z3tyfDshlENBmLapBbOuMWGGeBSxU8tU1nOSBdBcW8DNC245W4vOsF2Al4E2kwBFlVcfF+w==)
   producer:
-    group: iot-group
+    group: ENC(y/Rng3fG65OT4T9L6+T2UB5M1sVR+juYucIn5H9pqMH/dyMtamZeo0e+u+VrBimi)
     send-message-timeout: 3000
     retry-times-when-send-async-failed: 2
     retry-times-when-send-failed: 2

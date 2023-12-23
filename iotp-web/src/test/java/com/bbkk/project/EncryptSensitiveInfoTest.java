@@ -28,7 +28,7 @@ public class EncryptSensitiveInfoTest {
 
     @Test
     public void generatePassword() {
-        String password = "123456";
+        String password = "";
         System.out.println(passwordEncoder.encode(password));
     }
 
