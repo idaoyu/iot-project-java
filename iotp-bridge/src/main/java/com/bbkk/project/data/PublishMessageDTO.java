@@ -1,8 +1,8 @@
-package com.bbkk.project.data.v1;
+package com.bbkk.project.data;
 
-import com.bbkk.project.data.common.BasePublishMessageDTO;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * 设备发布消息 dto
@@ -12,27 +12,24 @@ import lombok.EqualsAndHashCode;
  * @since 2023-12-21 19:15
  **/
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class V1PublishMessageDTO extends BasePublishMessageDTO {
+public class PublishMessageDTO {
 
     /**
      * 发布的数据类型 属性上报/触发事件/执行方法 等
      */
+    @NotEmpty(message = "type 不能为空")
     private String type;
-
-    /**
-     * 消息签名
-     */
-    private String sign;
 
     /**
      * 设备测发布的事件戳
      */
+    @NotNull(message = "timestamp 不能为空")
     private Long timestamp;
 
     /**
      * 上报数据内容
      */
+    @NotEmpty(message = "payload 不能为空")
     private String payload;
 
 }
