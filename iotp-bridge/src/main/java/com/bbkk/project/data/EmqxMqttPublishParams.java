@@ -6,13 +6,13 @@ import lombok.Data;
 import java.util.Map;
 
 /**
- * emqx webhook 推送的消息
+ * emqx mqtt 发布消息
  *
  * @author 一条秋刀鱼zz qchenzexuan@vip.qq.com
  * @since 2023-12-21 18:14
  **/
 @Data
-public class EmqxWebhookMqttParams {
+public class EmqxMqttPublishParams {
 
     /**
      * MQTT 消息 ID

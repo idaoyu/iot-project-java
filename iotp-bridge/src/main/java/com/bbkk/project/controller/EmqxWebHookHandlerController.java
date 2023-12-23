@@ -1,6 +1,7 @@
 package com.bbkk.project.controller;
 
-import com.bbkk.project.data.EmqxWebhookMqttParams;
+import com.bbkk.project.data.EmqxMqttPublishParams;
+import com.bbkk.project.data.EmqxSessionSubscribedParams;
 import com.bbkk.project.data.common.EmqxWebhookResponse;
 import com.bbkk.project.service.EmqxWebHookHandlerService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,15 +27,29 @@ public class EmqxWebHookHandlerController {
     private final EmqxWebHookHandlerService emqxWebHookHandlerService;
 
     /**
-     * emqx 消息发布
+     * 消息发布
      *
-     * @param params EmqxWebhookMqttParams
+     * @param params   EmqxWebhookMqttParams
+     * @param response HttpServletResponse
      * @return EmqxWebhookResponse
      */
     @PostMapping("/publishMessage")
     public EmqxWebhookResponse publishMessageHandler(
-            @RequestBody EmqxWebhookMqttParams params, HttpServletResponse response) {
+            @RequestBody EmqxMqttPublishParams params, HttpServletResponse response) {
         return emqxWebHookHandlerService.publishMessageHandler(params, response);
+    }
+
+    /**
+     * 客户端订阅成功
+     *
+     * @param params   EmqxSessionSubscribedParams
+     * @param response HttpServletResponse
+     * @return EmqxWebhookResponse
+     */
+    @PostMapping("/sessionSubscribed")
+    public EmqxWebhookResponse sessionSubscribedHandler(
+            @RequestBody EmqxSessionSubscribedParams params, HttpServletResponse response) {
+        return emqxWebHookHandlerService.sessionSubscribedHandler(params, response);
     }
 
 }

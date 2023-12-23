@@ -8,3 +8,12 @@ rocketmq:
     max-message-size: 4096
     compress-message-body-threshold: 4096
     retry-next-server: false
+spring:
+  data:
+    redis:
+      database: 0
+      port: 6379
+      host: ENC(ie8hf2W1RPMjzigdJK1MnhtQF3rmkDJGMgS6XvRFqOVkSuADmKLXkhO9xomPrDRA)
+      password: ENC(kDrmhVebkri4qOWkNYV6qTAfceC5u7YoDANKOfspQKnghZjKOQZceqW6y+CSvJ/T70NENbiWdV0h+RZrFYZq+g==)
+      timeout: 1000
+      connect-timeout: 10000

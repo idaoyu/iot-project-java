@@ -2,8 +2,9 @@ package com.bbkk.project.service;
 
 import cn.hutool.http.HttpStatus;
 import com.alibaba.fastjson2.JSONObject;
-import com.bbkk.project.constant.MqTopicConstant;
-import com.bbkk.project.data.EmqxWebhookMqttParams;
+import com.bbkk.project.constant.LockKeyConstant;
+import com.bbkk.project.data.EmqxMqttPublishParams;
+import com.bbkk.project.data.EmqxSessionSubscribedParams;
 import com.bbkk.project.data.PublishMessageDTO;
 import com.bbkk.project.data.common.EmqxWebhookResponse;
 import com.bbkk.project.utils.ValidatedUtil;
@@ -14,7 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
+
+import static com.bbkk.project.constant.MqTopicConstant.IOT_EMQX_MQTT_PUBLISH_MESSAGE;
+import static com.bbkk.project.constant.MqTopicConstant.IOT_EMQX_MQTT_SESSION_SUBSCRIBED;
 
 /**
  * EMQX Webhook 处理接口 业务逻辑
@@ -28,8 +34,9 @@ import org.springframework.stereotype.Service;
 public class EmqxWebHookHandlerService {
 
     private final RocketMQTemplate rocketMQTemplate;
+    private final RedissonClient redissonClient;
 
-    public EmqxWebhookResponse publishMessageHandler(EmqxWebhookMqttParams params, HttpServletResponse response) {
+    public EmqxWebhookResponse publishMessageHandler(EmqxMqttPublishParams params, HttpServletResponse response) {
         PublishMessageDTO publishMessageDTO;
         try {
             // 解析 payload
@@ -46,10 +53,10 @@ public class EmqxWebHookHandlerService {
             return EmqxWebhookResponse.error("Request format error.");
         }
         // 把消息发送至 mq
-        rocketMQTemplate.asyncSend(MqTopicConstant.IOT_EMQX_MQTT_PUBLISH_MESSAGE.getTopic(), publishMessageDTO, new SendCallback() {
+        rocketMQTemplate.asyncSend(IOT_EMQX_MQTT_PUBLISH_MESSAGE.getTopic(), publishMessageDTO, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
-                log.info("Send message successfully, messageId={}", sendResult.getMsgId());
+                log.info("Send message successfully, topic={}, messageId={}", IOT_EMQX_MQTT_PUBLISH_MESSAGE.getTopic(), sendResult.getMsgId());
             }
 
             @Override
@@ -58,6 +65,37 @@ public class EmqxWebHookHandlerService {
             }
         });
 
+
+        return EmqxWebhookResponse.success();
+    }
+
+    public EmqxWebhookResponse sessionSubscribedHandler(EmqxSessionSubscribedParams params, HttpServletResponse response) {
+        log.info(JSONObject.toJSONString(params));
+        /*
+        将消息发送至 mq 由 mq 消费者完成:
+        1. 查询产品信息 获取物模型、影子等数据
+        2. 将查询到的信息 发送至 mq。iotp-bridge 模块中存在对该 topic 的消费者 去响应设备数据
+         */
+        // todo 不确定这样锁和不合理 有问题后续重构 加锁 保证整个链路中只存在一条
+        RLock rLock = redissonClient.getLock(LockKeyConstant.DEVICE_SUBSCRIPTION_TOPIC_LOCK.getKey() + params.getTopic());
+        // 尝试获取锁
+        if (!rLock.tryLock()) {
+            // 如果没有拿到锁 那直接不做任何处理
+            return EmqxWebhookResponse.success();
+        }
+        rocketMQTemplate.asyncSend(IOT_EMQX_MQTT_SESSION_SUBSCRIBED.getTopic(), params, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("Send message successfully, topic={}, messageId={}", IOT_EMQX_MQTT_SESSION_SUBSCRIBED.getTopic(), sendResult.getMsgId());
+            }
+
+            @Override
+            public void onException(Throwable e) {
+                log.error("Failed to send message", e);
+                // 没有成功的把 消息发送至 mq 则释放锁
+                rLock.unlock();
+            }
+        });
 
         return EmqxWebhookResponse.success();
     }
