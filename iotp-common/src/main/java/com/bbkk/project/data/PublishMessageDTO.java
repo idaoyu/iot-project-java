@@ -15,9 +15,18 @@ import lombok.Data;
 public class PublishMessageDTO {
 
     /**
+     * 产品id
+     */
+    private String productId;
+
+    /**
+     * 设备id
+     */
+    private String deviceId;
+
+    /**
      * 发布的数据类型 属性上报/触发事件/执行方法 等
      */
-    @NotEmpty(message = "type 不能为空")
     private String type;
 
     /**

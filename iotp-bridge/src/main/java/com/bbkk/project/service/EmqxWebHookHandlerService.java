@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -43,6 +44,19 @@ public class EmqxWebHookHandlerService {
             publishMessageDTO = JSONObject.parseObject(params.getPayload(), PublishMessageDTO.class);
             // 校验是否缺少字段
             ValidatedUtil.validateEntity(publishMessageDTO);
+            if (StringUtils.isBlank(params.getTopic())) {
+                throw new NullPointerException("topic is null");
+            }
+            String[] array = params.getTopic().split("/");
+            if (array.length != 3) {
+                throw new RuntimeException("topic 格式错误");
+            }
+            // 设置产品id
+            publishMessageDTO.setProductId(array[0]);
+            // 设置设备id
+            publishMessageDTO.setDeviceId(array[1]);
+            // 设置行为类型
+            publishMessageDTO.setType(array[2]);
         } catch (ConstraintViolationException ex) {
             log.warn("接收消息时,字段校验未通过 原因为: {}", ex.getConstraintViolations().stream().toList().get(0).getMessage());
             response.setStatus(HttpStatus.HTTP_FORBIDDEN);
