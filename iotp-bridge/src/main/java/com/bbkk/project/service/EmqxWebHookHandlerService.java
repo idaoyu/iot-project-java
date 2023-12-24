@@ -53,10 +53,10 @@ public class EmqxWebHookHandlerService {
             return EmqxWebhookResponse.error("Request format error.");
         }
         // 把消息发送至 mq
-        rocketMQTemplate.asyncSend(IOT_EMQX_MQTT_PUBLISH_MESSAGE.getTopic(), publishMessageDTO, new SendCallback() {
+        rocketMQTemplate.asyncSend(IOT_EMQX_MQTT_PUBLISH_MESSAGE, publishMessageDTO, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
-                log.info("Send message successfully, topic={}, messageId={}", IOT_EMQX_MQTT_PUBLISH_MESSAGE.getTopic(), sendResult.getMsgId());
+                log.info("Send message successfully, topic={}, messageId={}", IOT_EMQX_MQTT_PUBLISH_MESSAGE, sendResult.getMsgId());
             }
 
             @Override
@@ -76,17 +76,17 @@ public class EmqxWebHookHandlerService {
         1. 查询产品信息 获取物模型、影子等数据
         2. 将查询到的信息 发送至 mq。iotp-bridge 模块中存在对该 topic 的消费者 去响应设备数据
          */
-        // todo 不确定这样锁和不合理 有问题后续重构 加锁 保证整个链路中只存在一条
+        // 为保证幂等性 加锁 直到 mq 消费完成
         RLock rLock = redissonClient.getLock(LockKeyConstant.DEVICE_SUBSCRIPTION_TOPIC_LOCK.getKey() + params.getTopic());
         // 尝试获取锁
         if (!rLock.tryLock()) {
             // 如果没有拿到锁 那直接不做任何处理
             return EmqxWebhookResponse.success();
         }
-        rocketMQTemplate.asyncSend(IOT_EMQX_MQTT_SESSION_SUBSCRIBED.getTopic(), params, new SendCallback() {
+        rocketMQTemplate.asyncSend(IOT_EMQX_MQTT_SESSION_SUBSCRIBED, params, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
-                log.info("Send message successfully, topic={}, messageId={}", IOT_EMQX_MQTT_SESSION_SUBSCRIBED.getTopic(), sendResult.getMsgId());
+                log.info("Send message successfully, topic={}, messageId={}", IOT_EMQX_MQTT_SESSION_SUBSCRIBED, sendResult.getMsgId());
             }
 
             @Override

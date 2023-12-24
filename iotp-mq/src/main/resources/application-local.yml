@@ -1,0 +1,14 @@
+spring:
+  data:
+    redis:
+      database: 0
+      port: 6379
+      host: 127.0.0.1
+      password:
+      timeout: 1000
+      connect-timeout: 10000
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: iot-group
+    send-message-timeout: 3000
