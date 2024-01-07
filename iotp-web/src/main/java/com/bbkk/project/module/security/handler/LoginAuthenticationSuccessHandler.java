@@ -1,7 +1,7 @@
 package com.bbkk.project.module.security.handler;
 
+import com.bbkk.project.data.ResultBody;
 import com.bbkk.project.module.upms.entity.SystemUser;
-import com.bbkk.project.module.web.data.ResultBody;
 import com.bbkk.project.utils.HttpServletUtil;
 import com.bbkk.project.utils.JwtUtil;
 import com.google.common.collect.Maps;

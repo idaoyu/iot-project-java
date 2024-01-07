@@ -2,6 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <artifactId>iotp-dependency</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>iotp-dependency</name>
+    <description>iotp-dependency</description>
+
+    <packaging>pom</packaging>
 
     <parent>
         <groupId>com.bbkk</groupId>
@@ -9,22 +15,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>iotp-device</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>iotp-device</name>
-    <description>iotp-device</description>
-    <packaging>pom</packaging>
-
     <modules>
-        <module>iotp-device-api</module>
-        <module>iotp-device-biz</module>
+        <module>iotp-dependency-web</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>

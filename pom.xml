@@ -12,31 +12,37 @@
 
     <!-- 统一定义项目依赖版本 -->
     <properties>
+        <!--核心依赖版本定义 -->
         <spring-boot.version>3.0.2</spring-boot.version>
         <spring-cloud.version>2022.0.0-RC2</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
 
+        <!-- 工具类依赖版本定义 -->
         <hutool.version>5.8.18</hutool.version>
         <guava.version>32.1.3-jre</guava.version>
         <lang3.version>3.14.0</lang3.version>
         <lombok.version>1.18.30</lombok.version>
-
-        <mybatis-plus.version>3.5.4</mybatis-plus.version>
-        <redisson.verson>3.24.3</redisson.verson>
-        <rocket-mq.version>2.2.3</rocket-mq.version>
+        <p6spy.version>1.9.1</p6spy.version>
         <jasypt.version>3.0.5</jasypt.version>
         <fastjson.version>2.0.32</fastjson.version>
         <jjwt.version>0.12.3</jjwt.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+
+        <!-- 框架类 中间件类依赖版本定义 -->
+        <mybatis-plus.version>3.5.4</mybatis-plus.version>
+        <redisson.verson>3.24.3</redisson.verson>
+        <rocket-mq.version>2.2.3</rocket-mq.version>
         <minio-client.version>8.5.7</minio-client.version>
-        <p6spy.version>1.9.1</p6spy.version>
         <influxdb-client.version>6.6.0</influxdb-client.version>
 
+        <!-- 二方库版本 -->
         <iotp-common.version>0.0.1-SNAPSHOT</iotp-common.version>
+        <iotp-dependency-web.version>0.0.1-SNAPSHOT</iotp-dependency-web.version>
     </properties>
 
     <!-- 子模块 -->
     <modules>
+        <module>iotp-dependency</module>
         <module>iotp-common</module>
         <module>iotp-web</module>
         <module>iotp-mq</module>
@@ -46,7 +52,6 @@
 
     <!-- 声明所有子模块都需要导入的依赖 -->
     <dependencies>
-
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -108,6 +113,11 @@
                 <groupId>com.bbkk</groupId>
                 <artifactId>iotp-common</artifactId>
                 <version>${iotp-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bbkk</groupId>
+                <artifactId>iotp-dependency-web</artifactId>
+                <version>${iotp-dependency-web.version}</version>
             </dependency>
 
             <!-- 三方框架 工具依赖 -->

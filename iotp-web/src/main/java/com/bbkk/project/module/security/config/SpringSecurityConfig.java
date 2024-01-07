@@ -1,12 +1,11 @@
 package com.bbkk.project.module.security.config;
 
-import com.bbkk.project.constant.SecurityErrorCodeConstant;
+import com.bbkk.project.data.ResultBody;
 import com.bbkk.project.module.security.filter.TokenVerifyFilter;
 import com.bbkk.project.module.security.filter.UsernamePasswordAuthFilter;
 import com.bbkk.project.module.security.handler.LoginAuthenticationFailureHandler;
 import com.bbkk.project.module.security.handler.LoginAuthenticationSuccessHandler;
 import com.bbkk.project.module.security.service.UserDetailsServiceImpl;
-import com.bbkk.project.module.web.data.ResultBody;
 import com.bbkk.project.utils.HttpServletUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +21,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static com.bbkk.project.constant.SecurityErrorCodeConstant.DOES_NOT_HAVE_REQUIRED_PERMISSIONS_FOR_ACCESS;
+import static com.bbkk.project.constant.SecurityErrorCodeConstant.NEED_LOGIN;
 
 /**
  * spring security 配置类
@@ -109,13 +111,14 @@ public class SpringSecurityConfig {
                 .exceptionHandling(v -> {
                     // 当用户未通过认证时访问受保护的资源时
                     v.authenticationEntryPoint((req, resp, authException) -> {
-                        ResultBody resultBody = ResultBody.error(SecurityErrorCodeConstant.NEED_LOGIN);
+                        ResultBody resultBody = ResultBody.error(NEED_LOGIN.getCode(), NEED_LOGIN.getMessage());
                         HttpServletUtil.writeHttpServletResponse(resp, resultBody);
                     });
                     // 当用户通过认证时访问受保护的资源，但是权限不足时
                     v.accessDeniedHandler((req, resp, accessDeniedException) -> {
                         ResultBody resultBody =
-                                ResultBody.error(SecurityErrorCodeConstant.DOES_NOT_HAVE_REQUIRED_PERMISSIONS_FOR_ACCESS);
+                                ResultBody.error(
+                                        DOES_NOT_HAVE_REQUIRED_PERMISSIONS_FOR_ACCESS.getCode(), DOES_NOT_HAVE_REQUIRED_PERMISSIONS_FOR_ACCESS.getMessage());
                         HttpServletUtil.writeHttpServletResponse(resp, resultBody);
                     });
                 });

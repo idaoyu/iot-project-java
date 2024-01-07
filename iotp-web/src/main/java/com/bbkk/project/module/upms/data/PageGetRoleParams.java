@@ -1,6 +1,6 @@
 package com.bbkk.project.module.upms.data;
 
-import com.bbkk.project.module.web.data.PageParams;
+import com.bbkk.project.data.PageParams;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
