@@ -1,6 +1,8 @@
 package com.bbkk.project.factory.impl;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.bbkk.project.constant.PublishActionConstant;
+import com.bbkk.project.data.PropertyReportPayloadDTO;
 import com.bbkk.project.data.PublishMessageDTO;
 import com.bbkk.project.factory.IPublishMessageHandlerFactory;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,17 @@ public class ReportPublishMessageHandlerImpl implements IPublishMessageHandlerFa
 
     @Override
     public void handler(PublishMessageDTO publishMessageDTO) {
-        log.info("ReportPublishMessageHandlerImpl do handler");
+        PropertyReportPayloadDTO dto;
+        try {
+            dto = JSONObject.parseObject(publishMessageDTO.getPayload(), PropertyReportPayloadDTO.class);
+        } catch (Exception ex) {
+            log.warn("上报数据解析失败 设备id: {} 产品id: {} 原始数据内容:{}"
+                    , publishMessageDTO.getDeviceId()
+                    , publishMessageDTO.getProductId()
+                    , publishMessageDTO.getPayload());
+            return;
+        }
+        log.info(JSONObject.toJSONString(dto));
 
     }
 

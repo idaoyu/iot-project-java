@@ -1,0 +1,13 @@
+server:
+  port: 9093
+spring:
+  application:
+    name: iotp-device
+  profiles:
+    active: dev
+  jackson:
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: true
+  freemarker:
+    check-template-location: false
