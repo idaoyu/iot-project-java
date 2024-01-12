@@ -1,7 +1,0 @@
-server:
-  port: 9092
-spring:
-  application:
-    name: iotp-mq
-  profiles:
-    active: dev

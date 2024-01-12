@@ -20,11 +20,19 @@
         <module>iotp-device-biz</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-    </dependencies>
+    <properties>
+        <iotp-device-api.version>0.0.1-SNAPSHOT</iotp-device-api.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.bbkk</groupId>
+                <artifactId>iotp-device-api</artifactId>
+                <version>${iotp-device-api.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
 </project>

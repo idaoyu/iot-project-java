@@ -1,0 +1,7 @@
+server:
+  port: 9092
+spring:
+  application:
+    name: iotp-bridge-consumer
+  profiles:
+    active: dev

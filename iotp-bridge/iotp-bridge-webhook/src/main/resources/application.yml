@@ -1,0 +1,7 @@
+server:
+  port: 9091
+spring:
+  application:
+    name: iotp-bridge-webhook
+  profiles:
+    active: dev

@@ -1,7 +1,0 @@
-server:
-  port: 9091
-spring:
-  application:
-    name: iotp-bridge
-  profiles:
-    active: dev

@@ -12,6 +12,7 @@
 
     <!-- 统一定义项目依赖版本 -->
     <properties>
+        <java.version>17</java.version>
         <!--核心依赖版本定义 -->
         <spring-boot.version>3.0.2</spring-boot.version>
         <spring-cloud.version>2022.0.0-RC2</spring-cloud.version>
@@ -38,6 +39,7 @@
         <!-- 二方库版本 -->
         <iotp-common.version>0.0.1-SNAPSHOT</iotp-common.version>
         <iotp-dependency-web.version>0.0.1-SNAPSHOT</iotp-dependency-web.version>
+        <iotp-dependency-openfeign.version>0.0.1-SNAPSHOT</iotp-dependency-openfeign.version>
     </properties>
 
     <!-- 子模块 -->
@@ -45,7 +47,6 @@
         <module>iotp-dependency</module>
         <module>iotp-common</module>
         <module>iotp-web</module>
-        <module>iotp-mq</module>
         <module>iotp-bridge</module>
         <module>iotp-device</module>
     </modules>
@@ -118,6 +119,11 @@
                 <groupId>com.bbkk</groupId>
                 <artifactId>iotp-dependency-web</artifactId>
                 <version>${iotp-dependency-web.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bbkk</groupId>
+                <artifactId>iotp-dependency-openfeign</artifactId>
+                <version>${iotp-dependency-openfeign.version}</version>
             </dependency>
 
             <!-- 三方框架 工具依赖 -->
@@ -208,6 +214,32 @@
                 </includes>
             </resource>
         </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <!-- 指定项目 java 版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <repositories>
