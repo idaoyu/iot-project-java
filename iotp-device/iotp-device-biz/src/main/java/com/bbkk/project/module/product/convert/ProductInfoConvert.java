@@ -1,5 +1,6 @@
 package com.bbkk.project.module.product.convert;
 
+import com.bbkk.project.data.GetProductInfoDTO;
 import com.bbkk.project.module.product.data.OperationProductInfoParams;
 import com.bbkk.project.module.product.entity.ProductInfo;
 import org.mapstruct.Mapper;
@@ -29,6 +30,9 @@ public interface ProductInfoConvert {
     @Mapping(target = "createTime", expression = "java(new java.util.Date())")
     @Mapping(target = "updateTime", expression = "java(new java.util.Date())")
     ProductInfo operationProductInfoParams2ProductInfo(OperationProductInfoParams params);
+
+
+    GetProductInfoDTO productInfo2GetProductInfoDTO(ProductInfo productInfo);
 
 
 }

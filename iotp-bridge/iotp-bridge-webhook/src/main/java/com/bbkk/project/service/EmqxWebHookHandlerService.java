@@ -52,7 +52,7 @@ public class EmqxWebHookHandlerService {
                 throw new RuntimeException("topic 格式错误");
             }
             // 设置产品id
-            publishMessageDTO.setProductId(array[0]);
+            publishMessageDTO.setProductId(Long.parseLong(array[0]));
             // 设置设备id
             publishMessageDTO.setDeviceId(array[1]);
             // 设置行为类型

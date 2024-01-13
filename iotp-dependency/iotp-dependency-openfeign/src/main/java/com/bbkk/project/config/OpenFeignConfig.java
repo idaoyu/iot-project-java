@@ -10,6 +10,6 @@ import org.springframework.context.annotation.Configuration;
  * @since 2024-01-12 21:48
  **/
 @Configuration
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.bbkk.project.api"})
 public class OpenFeignConfig {
 }

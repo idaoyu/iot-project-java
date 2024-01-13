@@ -52,6 +52,7 @@ public class ProductInfoManageService {
             builder.name(v.getName());
             builder.description(v.getDescription());
             builder.imageUrl(v.getImageUrl());
+            builder.needSaveProperty(v.getNeedSaveProperty());
             builder.createTime(v.getCreateTime());
             builder.updateTime(v.getUpdateTime());
             if (v.getType() != null) {
@@ -67,6 +68,12 @@ public class ProductInfoManageService {
     @Transactional(rollbackFor = Exception.class)
     public String createProductInfo(OperationProductInfoParams params) {
         ProductInfo productInfo = productInfoConvert.operationProductInfoParams2ProductInfo(params);
+        // 如果未指定是否需要保存设备上报的属性 则 默认为不保存
+        if (params.getNeedSaveProperty() == null) {
+            productInfo.setNeedSaveProperty(false);
+        } else {
+            productInfo.setNeedSaveProperty(params.getNeedSaveProperty());
+        }
         if (params.getType() != null) {
             ProductType productType = productTypeService.getOptById(params.getType()).orElseThrow(() -> new BizException("产品类目错误"));
             productInfo.setType(productType.getId());
@@ -154,6 +161,7 @@ public class ProductInfoManageService {
         productInfo.setName(params.getName());
         productInfo.setDescription(params.getDescription());
         productInfo.setImageUrl(params.getImageUrl());
+        productInfo.setNeedSaveProperty(params.getNeedSaveProperty());
         if (params.getType() != null) {
             ProductType productType = productTypeService.getOptById(params.getType()).orElseThrow(() -> new BizException("商品类目不存在"));
             productInfo.setType(productType.getId());

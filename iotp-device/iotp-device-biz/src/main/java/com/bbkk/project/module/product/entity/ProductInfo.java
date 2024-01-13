@@ -52,6 +52,12 @@ public class ProductInfo {
     private Long type;
 
     /**
+     * 是否需要存储设备上报的属性
+     */
+    @TableField(value = "need_save_property")
+    private Boolean needSaveProperty;
+
+    /**
      * 需要认证
      */
     @TableField(value = "need_auth")

@@ -22,7 +22,11 @@ public enum RedisCacheKeyConstant {
     /**
      * 存放物联网设备影子
      */
-    IOT_DEVICE_SHADOW_CATHE("iot:device:shadow:", Duration.ofHours(1)),
+    IOT_DEVICE_SHADOW_CACHE("iot:device:shadow:", Duration.ofHours(1)),
+    /**
+     * hash表结构 存放物联网产品信息
+     */
+    IOT_PRODUCT_INFO_CACHE("iot:productInfo", Duration.ofDays(3)),
     ;
 
     private final String key;

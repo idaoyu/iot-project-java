@@ -40,6 +40,7 @@
         <iotp-common.version>0.0.1-SNAPSHOT</iotp-common.version>
         <iotp-dependency-web.version>0.0.1-SNAPSHOT</iotp-dependency-web.version>
         <iotp-dependency-openfeign.version>0.0.1-SNAPSHOT</iotp-dependency-openfeign.version>
+        <iotp-device-api.version>0.0.1-SNAPSHOT</iotp-device-api.version>
     </properties>
 
     <!-- 子模块 -->
@@ -124,6 +125,11 @@
                 <groupId>com.bbkk</groupId>
                 <artifactId>iotp-dependency-openfeign</artifactId>
                 <version>${iotp-dependency-openfeign.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bbkk</groupId>
+                <artifactId>iotp-device-api</artifactId>
+                <version>${iotp-device-api.version}</version>
             </dependency>
 
             <!-- 三方框架 工具依赖 -->

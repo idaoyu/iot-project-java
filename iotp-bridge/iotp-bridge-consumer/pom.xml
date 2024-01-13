@@ -27,6 +27,10 @@
             <groupId>com.bbkk</groupId>
             <artifactId>iotp-bridge-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.bbkk</groupId>
+            <artifactId>iotp-device-api</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

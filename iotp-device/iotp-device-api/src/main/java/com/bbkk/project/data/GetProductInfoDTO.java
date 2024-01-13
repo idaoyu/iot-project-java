@@ -1,19 +1,17 @@
-package com.bbkk.project.module.product.data;
+package com.bbkk.project.data;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
 /**
- * 分页查询产品信息 vo
+ * 获取产品信息 dto
  *
  * @author 一条秋刀鱼zz qchenzexuan@vip.qq.com
- * @since 2023-12-12 19:33
+ * @since 2024-01-13 18:13
  **/
 @Data
-@Builder
-public class PageGetProductInfoVO {
+public class GetProductInfoDTO {
 
     private Long id;
 
@@ -33,14 +31,29 @@ public class PageGetProductInfoVO {
     private String imageUrl;
 
     /**
+     * 产品分类（存放分类表id）
+     */
+    private Long type;
+
+    /**
      * 是否需要存储设备上报的属性
      */
     private Boolean needSaveProperty;
 
     /**
-     * 产品分类
+     * 需要认证
      */
-    private String type;
+    private Boolean needAuth;
+
+    /**
+     * 认证类型
+     */
+    private String authType;
+
+    /**
+     * 产品状态
+     */
+    private String status;
 
     /**
      * 创建时间

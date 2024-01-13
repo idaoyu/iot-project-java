@@ -17,7 +17,7 @@ public class PublishMessageDTO {
     /**
      * 产品id
      */
-    private String productId;
+    private Long productId;
 
     /**
      * 设备id

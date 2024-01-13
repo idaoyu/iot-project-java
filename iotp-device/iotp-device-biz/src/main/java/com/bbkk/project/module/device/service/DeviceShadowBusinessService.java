@@ -23,7 +23,7 @@ public class DeviceShadowBusinessService {
 
     public DeviceShadow getShadow(String deviceId) {
         // 通过设备id 从 redis 中尝试获取影子数据
-        RBucket<DeviceShadow> bucket = redissonClient.getBucket(RedisCacheKeyConstant.IOT_DEVICE_SHADOW_CATHE.getKey() + deviceId);
+        RBucket<DeviceShadow> bucket = redissonClient.getBucket(RedisCacheKeyConstant.IOT_DEVICE_SHADOW_CACHE.getKey() + deviceId);
         DeviceShadow deviceShadow = bucket.get();
         // 如果 redis 中有数据 直接返回
         if (deviceShadow != null) {
@@ -32,7 +32,7 @@ public class DeviceShadowBusinessService {
         // 查询数据库
         deviceShadow = deviceShadowService.getOptById(deviceId).orElseThrow(() -> new BizException("未查询到设备影子数据"));
         // 设置 redis 缓存
-        bucket.set(deviceShadow, RedisCacheKeyConstant.IOT_DEVICE_SHADOW_CATHE.getDuration());
+        bucket.set(deviceShadow, RedisCacheKeyConstant.IOT_DEVICE_SHADOW_CACHE.getDuration());
         return deviceShadow;
     }
 }

@@ -39,6 +39,12 @@ public class OperationProductInfoParams {
     private String imageUrl;
 
     /**
+     * 是否需要存储设备上报的属性
+     */
+    @NotNull(message = "needSaveProperty不能为空", groups = {ValidatedGroup.UpdateGroup.class})
+    private Boolean needSaveProperty;
+
+    /**
      * 需要认证
      */
     @NotNull(message = "needAuth 不能为空", groups = {ValidatedGroup.UpdateGroup.class, ValidatedGroup.CreateGroup.class})
